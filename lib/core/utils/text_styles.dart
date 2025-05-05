@@ -8,6 +8,17 @@ abstract class AppTextStyles {
     fontSize: 24,
     fontWeight: FontWeight.bold,
   );
+  static const TextStyle regular10 = TextStyle(
+    fontFamily: _fontFamily,
+    fontSize: 10,
+    fontWeight: FontWeight.normal,
+  );
+
+  static const TextStyle regular12 = TextStyle(
+    fontFamily: _fontFamily,
+    fontSize: 12,
+    fontWeight: FontWeight.normal,
+  );
 
   static const TextStyle regular16 = TextStyle(
     fontFamily: _fontFamily,
@@ -30,6 +41,11 @@ abstract class AppTextStyles {
   static const TextStyle semiBold20 = TextStyle(
     fontFamily: _fontFamily,
     fontSize: 20,
+    fontWeight: FontWeight.w600,
+  );
+  static const TextStyle semiBold12 = TextStyle(
+    fontFamily: _fontFamily,
+    fontSize: 12,
     fontWeight: FontWeight.w600,
   );
 
