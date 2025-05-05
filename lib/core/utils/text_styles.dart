@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class AppTextStyles {
+abstract class AppTextStyles {
   static const String _fontFamily = 'Poppins';
 
-  static const TextStyle bold20 = TextStyle(
+  static const TextStyle bold24 = TextStyle(
     fontFamily: _fontFamily,
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: FontWeight.bold,
   );
 
@@ -27,15 +27,9 @@ class AppTextStyles {
     fontWeight: FontWeight.w300,
   );
 
-  static const TextStyle semiBold24 = TextStyle(
+  static const TextStyle semiBold20 = TextStyle(
     fontFamily: _fontFamily,
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: FontWeight.w600,
-  );
-
-  static const TextStyle italic16 = TextStyle(
-    fontFamily: _fontFamily,
-    fontSize: 16,
-    fontStyle: FontStyle.italic,
   );
 }
