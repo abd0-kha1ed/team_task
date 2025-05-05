@@ -32,4 +32,10 @@ abstract class AppTextStyles {
     fontSize: 20,
     fontWeight: FontWeight.w600,
   );
+
+  static const TextStyle semiBold48 = TextStyle(
+    fontFamily: _fontFamily,
+    fontSize: 48,
+    fontWeight: FontWeight.w600,
+  );
 }
