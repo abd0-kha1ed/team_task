@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:team_task/feature/auth/presentation/view/login_view.dart';
+import 'package:team_task/feature/auth/presentation/view/sign_in_view.dart';
 import 'package:team_task/feature/splash/presentation/view/splash_view.dart';
 
 /// ***********  ✨ Windsurf Command ⭐  ************
@@ -12,6 +13,10 @@ Route<dynamic> onGenerateRoutes(RouteSettings settings) {
       case LoginView.routeName:
       return MaterialPageRoute(
         builder: (context) => const LoginView(),
+      );
+      case SignInView.routeName:
+      return MaterialPageRoute(
+        builder: (context) => const SignInView(),
       );
     default:
       return MaterialPageRoute(
