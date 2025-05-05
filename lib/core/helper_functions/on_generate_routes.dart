@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:team_task/feature/splash/presentation/view/splash_view.dart';
 
-/*************  ✨ Windsurf Command ⭐  *************/
+/// ***********  ✨ Windsurf Command ⭐  ************
 Route<dynamic> onGenerateRoutes(RouteSettings settings) {
   switch (settings.name) {
     case SplashView.routeName:
