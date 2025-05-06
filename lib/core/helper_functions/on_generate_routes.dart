@@ -1,30 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:team_task/feature/add_new_task/presentation/views/add_new_task_view.dart';
 import 'package:team_task/feature/auth/presentation/view/login_view.dart';
 import 'package:team_task/feature/auth/presentation/view/sign_in_view.dart';
+import 'package:team_task/feature/calendar/presentation/view/calendar_view.dart';
+import 'package:team_task/feature/home/presentation/view/home_view.dart';
+
 import 'package:team_task/feature/splash/presentation/view/splash_view.dart';
 
 /// ***********  ✨ Windsurf Command ⭐  ************
 Route<dynamic> onGenerateRoutes(RouteSettings settings) {
   switch (settings.name) {
     case SplashView.routeName:
-      return MaterialPageRoute(
-        builder: (context) => const SplashView(),
-      );
-      case LoginView.routeName:
-      return MaterialPageRoute(
-        builder: (context) => const LoginView(),
-      );
-      case SignInView.routeName:
-      return MaterialPageRoute(
-        builder: (context) => const SignInView(),
-      );
+      return MaterialPageRoute(builder: (context) => const SplashView());
+    case LoginView.routeName:
+      return MaterialPageRoute(builder: (context) => const LoginView());
+    case SignInView.routeName:
+      return MaterialPageRoute(builder: (context) => const SignInView());
+    case HomeView.routeName:
+      return MaterialPageRoute(builder: (context) => const HomeView());
+    case CalendarView.routeName:
+      return MaterialPageRoute(builder: (context) => const CalendarView());
+    case AddNewTaskView.routeName:
+      return MaterialPageRoute(builder: (context) => const AddNewTaskView());
     default:
       return MaterialPageRoute(
-        builder: (context) => Scaffold(
-          body: Center(
-            child: Text('No route defined for ${settings.name}'),
-          ),
-        ),
+        builder:
+            (context) => Scaffold(
+              body: Center(
+                child: Text('No route defined for ${settings.name}'),
+              ),
+            ),
       );
   }
 }
