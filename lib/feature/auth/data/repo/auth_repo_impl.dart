@@ -24,7 +24,7 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<Either<ServerException, RegisterEntity>> register({
+  Future<Either<ServerException, SignInEntity>> register({
     required String email,
     required String password,
     required String name,

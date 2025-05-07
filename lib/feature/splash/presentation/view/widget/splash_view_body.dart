@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:team_task/core/utils/app_colors.dart';
 import 'package:team_task/core/utils/assets.dart';
 import 'package:team_task/feature/auth/presentation/view/login_view.dart';
-import 'package:team_task/feature/home/presentation/view/home_view.dart';
 import 'package:team_task/feature/splash/presentation/view/widget/sliding_text.dart';
 
 class SplashViewBody extends StatefulWidget {

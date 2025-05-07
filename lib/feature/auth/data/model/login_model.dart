@@ -1,15 +1,15 @@
 import 'package:team_task/feature/auth/domain/entites/login_entity.dart';
 
 class LoginModel extends LoginEntity {
-  final String accesstoken;
-  final String refreshtoken;
+  final String accessToken;
+  final String refreshToken;
 
   LoginModel({
     required super.id,
     required super.email,
     required super.password,
-    required this.accesstoken,
-    required this.refreshtoken,
+    required this.accessToken,
+    required this.refreshToken,
   });
 
   // from json
@@ -18,8 +18,8 @@ class LoginModel extends LoginEntity {
       id: json['id'],
       email: json['email'],
       password: json['password'],
-      accesstoken: json['accesstoken'],
-      refreshtoken: json['refreshtoken'],
+      accessToken: json['access_token'],
+      refreshToken: json['refresh_token'],
     );
   }
 
@@ -29,8 +29,8 @@ class LoginModel extends LoginEntity {
       'id': id,
       'email': email,
       'password': password,
-      'accesstoken': accesstoken,
-      'refreshtoken': refreshtoken,
+      'access_token': accessToken,
+      'refresh_token': refreshToken,
     };
   }
 }
