@@ -4,6 +4,7 @@ import 'package:team_task/core/api/dio_consumer.dart';
 import 'package:team_task/core/api/end_points.dart';
 import 'package:team_task/core/errors/server_exsption.dart';
 import 'package:team_task/feature/auth/data/model/login_model.dart';
+import 'package:team_task/feature/auth/data/model/register_model.dart';
 
 class RemoteDataSource {
   final DioConsumer api;
@@ -29,7 +30,7 @@ class RemoteDataSource {
     }
   }
 
-  Future<Either<ServerException, LoginModel>> register({
+  Future<Either<ServerException, RegisterModel>> register({
     required String email,
     required String password,
     required String name,
@@ -39,7 +40,7 @@ class RemoteDataSource {
         EndPoint.signUp,
         data: {'email': email, 'password': password, 'name': name},
       );
-      final user = LoginModel.fromJson(response);
+      final user = RegisterModel.fromJson(response);
       // CacheHelper.saveData(key: ApiKey.token, value: user.refreshtoken);
       // CacheHelper.saveData(key: ApiKey.id, value: user.id);
 

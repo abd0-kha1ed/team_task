@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:team_task/core/utils/app_colors.dart';
 import 'package:team_task/core/utils/text_styles.dart';
 import 'package:team_task/core/widget/custom_button.dart';
-import 'package:team_task/feature/auth/presentation/view/sign_in_view.dart';
+import 'package:team_task/feature/auth/presentation/view/register_view.dart';
 import 'package:team_task/feature/auth/presentation/view/widget/custom_text_field.dart';
 import 'package:team_task/feature/auth/presentation/view/widget/validation_widget.dart';
 
@@ -88,7 +88,7 @@ class LoginViewBody extends StatelessWidget {
                 const SizedBox(width: 4),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, SignInView.routeName);
+                    Navigator.pushNamed(context, RegisterView.routeName);
                   },
                   child: Text(
                     'Sign Up',

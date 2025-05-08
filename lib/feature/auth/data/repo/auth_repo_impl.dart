@@ -24,12 +24,15 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<Either<ServerException, SignInEntity>> register({
+  Future<Either<ServerException, RegisterEntity>> register({
     required String email,
     required String password,
     required String name,
-  }) {
-    // TODO: implement register
-    throw UnimplementedError();
+  }) async {
+    return await remoteDataSource.register(
+      email: email,
+      password: password,
+      name: name,
+    );
   }
 }

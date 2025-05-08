@@ -1,6 +1,6 @@
 import 'package:team_task/feature/auth/domain/entites/register_entity.dart';
 
-class RegisterModel extends SignInEntity {
+class RegisterModel extends RegisterEntity {
   final String id;
   final String accessToken;
   final String refreshToken;

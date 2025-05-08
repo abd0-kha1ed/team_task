@@ -8,7 +8,7 @@ abstract class AuthRepo {
     required String email,
     required String password,
   });
-  Future<Either<ServerException, SignInEntity>> register({
+  Future<Either<ServerException, RegisterEntity>> register({
     required String email,
     required String password,
     required String name,

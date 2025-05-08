@@ -6,8 +6,8 @@ import 'package:team_task/feature/auth/presentation/view/widget/custom_text_fiel
 import 'package:team_task/feature/auth/presentation/view/widget/password_conditions_widget.dart';
 import 'package:team_task/feature/auth/presentation/view/widget/validation_widget.dart';
 
-class SignInViewBody extends StatelessWidget {
-  const SignInViewBody({super.key});
+class RegisterViewBody extends StatelessWidget {
+  const RegisterViewBody({super.key});
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

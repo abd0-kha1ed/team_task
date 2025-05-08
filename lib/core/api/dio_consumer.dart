@@ -7,7 +7,7 @@ import 'package:team_task/core/errors/server_exsption.dart';
 class DioConsumer extends ApiConsumer {
   final Dio dio;
 
-  DioConsumer({required this.dio}) {
+  DioConsumer({required this.dio, }) {
     dio.options.baseUrl = EndPoint.baseUrl;
     dio.interceptors.add(ApiInterceptor());
     dio.interceptors.add(

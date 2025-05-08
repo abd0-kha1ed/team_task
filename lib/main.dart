@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:team_task/core/helper_functions/on_generate_routes.dart';
+import 'package:team_task/core/functions/on_generate_routes.dart';
 import 'package:team_task/feature/splash/presentation/view/splash_view.dart';
 
 void main() {
