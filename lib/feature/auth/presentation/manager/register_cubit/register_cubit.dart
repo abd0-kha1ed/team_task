@@ -8,7 +8,7 @@ part 'register_state.dart';
 class RegisterCubit extends Cubit<RegisterState> {
   RegisterCubit(this.signInUseCase) : super(RegisterInitial());
   final RegisterUseCase signInUseCase;
-  Future<void> signIn({
+  Future<void> register({
     required String email,
     required String password,
     required String name,
