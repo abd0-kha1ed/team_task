@@ -6,7 +6,7 @@ class ServerException implements Exception {
 
   ServerException({required this.errorModel});
   @override
-  String toString() => 'ServerException: ${errorModel.errorMessage}';
+  String toString() => '${errorModel.errorMessage}';
 }
 
 void handleDioException(DioException e) {
@@ -38,12 +38,13 @@ void handleDioException(DioException e) {
       final code = e.response?.statusCode ?? 500;
 
       throw ServerException(
-        errorModel: responseData is Map<String, dynamic>
-            ? ErrorModel.fromJson(responseData)
-            : ErrorModel(
-                statusCode: code,
-                errorMessage: 'Unexpected error with status code $code',
-              ),
+        errorModel:
+            responseData is Map<String, dynamic>
+                ? ErrorModel.fromJson(responseData)
+                : ErrorModel(
+                  statusCode: code,
+                  errorMessage: 'Unexpected error with status code $code',
+                ),
       );
   }
 }

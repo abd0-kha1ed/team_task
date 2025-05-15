@@ -108,7 +108,7 @@ class RemoteDataSource {
       return ServerException(
         errorModel: ErrorModel(
           statusCode: code,
-          errorMessage: data['message'] ?? 'An error occurred.',
+          errorMessage: 'wrong email or password',
         ),
       );
     }
