@@ -21,14 +21,20 @@ class RemoteDataSource {
     try {
       final response = await api.post(
         EndPoint.login,
-        queryParameters: {ApiKey.email: email, ApiKey.password: password},
+        queryParameters: {
+          ApiKey.email: email,
+          ApiKey.password: password,
+        },
       );
 
       final user = LoginModel.fromJson(response.data);
 
       final decodedToken = JwtDecoder.decode(user.accessToken);
-      CacheHelper.saveData(key: ApiKey.token, value: user.accessToken);
-      CacheHelper.saveData(key: ApiKey.id, value: decodedToken[ApiKey.id]);
+      final idRaw = decodedToken[ApiKey.id];
+      final userId = int.tryParse(idRaw.toString()) ?? 0;
+
+      await CacheHelper.saveData(key: ApiKey.token, value: user.accessToken);
+      await CacheHelper.saveData(key: ApiKey.id, value: userId);
 
       return Right(user);
     } on DioException catch (e) {
@@ -51,9 +57,7 @@ class RemoteDataSource {
         },
       );
 
-      // Handle unexpected redirect or HTML
-      if (response.statusCode == 302 ||
-          response.data is! Map<String, dynamic>) {
+      if (response.statusCode == 302 || response.data is! Map<String, dynamic>) {
         return Left(
           ServerException(
             errorModel: ErrorModel(
@@ -108,7 +112,7 @@ class RemoteDataSource {
       return ServerException(
         errorModel: ErrorModel(
           statusCode: code,
-          errorMessage: 'wrong email or password',
+          errorMessage: data['message'] ?? 'Wrong email or password.',
         ),
       );
     }

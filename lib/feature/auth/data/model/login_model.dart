@@ -13,15 +13,17 @@ class LoginModel extends LoginEntity {
   });
 
   factory LoginModel.fromJson(Map<String, dynamic> json) {
-    final data = json['data'] ?? json; // fallback if wrapped
-    return LoginModel(
-      id: data['id'] as int,
-      email: data['email'] ?? '',
-      password: '', // don't get password from response
-      accessToken: data['access_token'] ?? '',
-      refreshToken: data['refresh_token'] ?? '',
-    );
-  }
+  final data = json['data'] ?? json;
+
+  return LoginModel(
+    id: int.tryParse(data['id'].toString()) ?? 0, // Ensures safe int conversion
+    email: data['email'] ?? '',
+    password: '', // never trust backend to return password
+    accessToken: data['access_token'] ?? '',
+    refreshToken: data['refresh_token'] ?? '',
+  );
+}
+
 
   Map<String, dynamic> toJson() {
     return {
