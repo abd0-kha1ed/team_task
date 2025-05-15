@@ -4,8 +4,14 @@ import 'package:team_task/core/utils/text_styles.dart';
 
 class PasswordConditions extends StatelessWidget {
   final String text;
-  final Color? color;
-  const PasswordConditions({super.key, required this.text,  this.color });
+  final bool isValid;
+
+  const PasswordConditions({
+    super.key,
+    required this.text,
+    required this.isValid,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -14,13 +20,18 @@ class PasswordConditions extends StatelessWidget {
           width: 10,
           height: 10,
           decoration: BoxDecoration(
-            color: color ?? AppColors.textSecondary.withValues(alpha: 0.4),
+            color:
+                isValid ? Colors.green : AppColors.textSecondary.withAlpha(100),
             borderRadius: BorderRadius.circular(6),
           ),
-          //
         ),
         const SizedBox(width: 8),
-        Text(text, style: AppTextStyles.regular12),
+        Text(
+          text,
+          style: AppTextStyles.regular12.copyWith(
+            color: isValid ? Colors.green : AppColors.textSecondary,
+          ),
+        ),
       ],
     );
   }
