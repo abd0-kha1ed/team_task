@@ -1,5 +1,5 @@
 class LoginEntity {
-  final String id;
+  final int id;
   final String email;
   final String password;
 

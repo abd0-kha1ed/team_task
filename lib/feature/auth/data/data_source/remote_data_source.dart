@@ -21,16 +21,13 @@ class RemoteDataSource {
     try {
       final response = await api.post(
         EndPoint.login,
-        queryParameters: {
-          ApiKey.email: email,
-          ApiKey.password: password,
-        },
+        queryParameters: {ApiKey.email: email, ApiKey.password: password},
       );
 
       final user = LoginModel.fromJson(response.data);
 
-      final decodedToken = JwtDecoder.decode(user.refreshToken);
-      CacheHelper.saveData(key: ApiKey.token, value: user.refreshToken);
+      final decodedToken = JwtDecoder.decode(user.accessToken);
+      CacheHelper.saveData(key: ApiKey.token, value: user.accessToken);
       CacheHelper.saveData(key: ApiKey.id, value: decodedToken[ApiKey.id]);
 
       return Right(user);
@@ -55,13 +52,16 @@ class RemoteDataSource {
       );
 
       // Handle unexpected redirect or HTML
-      if (response.statusCode == 302 || response.data is! Map<String, dynamic>) {
-        return Left(ServerException(
-          errorModel: ErrorModel(
-            statusCode: 302,
-            errorMessage: 'Email already exists or invalid response.',
+      if (response.statusCode == 302 ||
+          response.data is! Map<String, dynamic>) {
+        return Left(
+          ServerException(
+            errorModel: ErrorModel(
+              statusCode: 302,
+              errorMessage: 'Email already exists or invalid response.',
+            ),
           ),
-        ));
+        );
       }
 
       final user = RegisterModel.fromJson(response.data);
@@ -101,10 +101,7 @@ class RemoteDataSource {
       if (code == 422 && data.containsKey('errors')) {
         final errorMessage = extractValidationMessage(data['errors']);
         return ServerException(
-          errorModel: ErrorModel(
-            statusCode: code,
-            errorMessage: errorMessage,
-          ),
+          errorModel: ErrorModel(statusCode: code, errorMessage: errorMessage),
         );
       }
 

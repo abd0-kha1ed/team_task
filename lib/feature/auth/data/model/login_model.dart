@@ -15,7 +15,7 @@ class LoginModel extends LoginEntity {
   factory LoginModel.fromJson(Map<String, dynamic> json) {
     final data = json['data'] ?? json; // fallback if wrapped
     return LoginModel(
-      id: data['id'] ?? 0,
+      id: data['id'] as int,
       email: data['email'] ?? '',
       password: '', // don't get password from response
       accessToken: data['access_token'] ?? '',
