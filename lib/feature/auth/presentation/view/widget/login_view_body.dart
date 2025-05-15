@@ -20,7 +20,7 @@ class LoginViewBody extends StatefulWidget {
 class _LoginViewBodyState extends State<LoginViewBody> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final GlobalKey<FormState> formkey = GlobalKey();
+  final GlobalKey<FormState> formKey = GlobalKey();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   bool obscurePassword = true;
   String? email;
@@ -38,7 +38,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Form(
-          key: formkey,
+          key: formKey,
           autovalidateMode: autovalidateMode,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,13 +113,15 @@ class _LoginViewBodyState extends State<LoginViewBody> {
               CustomButton(
                 text: 'Login',
                 onPressed: () {
-                  if (formkey.currentState!.validate()) {
+                  if (formKey.currentState!.validate()) {
                     setState(() {
                       autovalidateMode = AutovalidateMode.disabled;
                       context.read<LoginCubit>().login(
                         email: email!,
                         password: password!,
                       );
+                      emailController.clear();
+                      passwordController.clear();
                     });
                   } else {
                     setState(() {

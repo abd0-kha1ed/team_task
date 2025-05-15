@@ -245,6 +245,10 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                             email: email!,
                             password: password!,
                           );
+                          nameController.clear();
+                          emailController.clear();
+                          passwordController.clear();
+                          confirmPasswordController.clear();
                         });
                       } else {
                         setState(() {

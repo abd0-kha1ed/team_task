@@ -4,7 +4,6 @@ import 'package:team_task/core/functions/service_locator.dart';
 import 'package:team_task/feature/auth/data/repo/auth_repo_impl.dart';
 import 'package:team_task/feature/auth/domain/use_cases/login_use_case.dart';
 import 'package:team_task/feature/auth/presentation/manager/login_cubit/login_cubit.dart';
-import 'package:team_task/feature/auth/presentation/view/widget/login_view_body.dart';
 import 'package:team_task/feature/auth/presentation/view/widget/login_view_body_bloc_consumer.dart';
 
 class LoginView extends StatelessWidget {
@@ -15,7 +14,7 @@ class LoginView extends StatelessWidget {
     return Scaffold(
       body: BlocProvider(
         create: (context) => LoginCubit(LoginUseCase(getIt<AuthRepoImpl>())),
-        child: LoginViewBodyblocConsumer(),
+        child: LoginViewBodyBlocConsumer(),
       ),
     );
   }
