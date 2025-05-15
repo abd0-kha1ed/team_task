@@ -3,7 +3,7 @@ class EndPoint {
 
   // Authentication
   static String login = "api/login?";
-  static String register = "api/register?";
+  static String register = "api/register";
   static String logout = "api/logout?";
   static String profile = "api/profile?";
   static String updateProfile = "api/update-profile?"; // If used

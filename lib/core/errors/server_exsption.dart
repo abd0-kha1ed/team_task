@@ -5,45 +5,45 @@ class ServerException implements Exception {
   final ErrorModel errorModel;
 
   ServerException({required this.errorModel});
+  @override
+  String toString() => 'ServerException: ${errorModel.errorMessage}';
 }
 
-void handleDioExeption(DioException e) {
+void handleDioException(DioException e) {
+  final responseData = e.response?.data;
+
   switch (e.type) {
     case DioExceptionType.connectionTimeout:
-      ServerException(errorModel: ErrorModel.fromJson(e.response!.data));
     case DioExceptionType.sendTimeout:
-      ServerException(errorModel: ErrorModel.fromJson(e.response!.data));
     case DioExceptionType.receiveTimeout:
-      ServerException(errorModel: ErrorModel.fromJson(e.response!.data));
     case DioExceptionType.badCertificate:
-      ServerException(errorModel: ErrorModel.fromJson(e.response!.data));
     case DioExceptionType.cancel:
-      ServerException(errorModel: ErrorModel.fromJson(e.response!.data));
     case DioExceptionType.connectionError:
-      ServerException(errorModel: ErrorModel.fromJson(e.response!.data));
+      throw ServerException(
+        errorModel: ErrorModel(
+          statusCode: 408,
+          errorMessage: "Connection timeout. Please try again.",
+        ),
+      );
+
     case DioExceptionType.unknown:
-      ServerException(errorModel: ErrorModel.fromJson(e.response!.data));
+      throw ServerException(
+        errorModel: ErrorModel(
+          statusCode: 520,
+          errorMessage: "Something went wrong. Please try again.",
+        ),
+      );
+
     case DioExceptionType.badResponse:
-      switch (e.response?.statusCode) {
-        case 400:
-          ServerException(errorModel: ErrorModel.fromJson(e.response!.data));
-        case 401:
-          ServerException(errorModel: ErrorModel.fromJson(e.response!.data));
+      final code = e.response?.statusCode ?? 500;
 
-        case 403:
-          ServerException(errorModel: ErrorModel.fromJson(e.response!.data));
-
-        case 404:
-          ServerException(errorModel: ErrorModel.fromJson(e.response!.data));
-
-        case 409:
-          ServerException(errorModel: ErrorModel.fromJson(e.response!.data));
-
-        case 422:
-          ServerException(errorModel: ErrorModel.fromJson(e.response!.data));
-
-        case 504:
-          ServerException(errorModel: ErrorModel.fromJson(e.response!.data));
-      }
+      throw ServerException(
+        errorModel: responseData is Map<String, dynamic>
+            ? ErrorModel.fromJson(responseData)
+            : ErrorModel(
+                statusCode: code,
+                errorMessage: 'Unexpected error with status code $code',
+              ),
+      );
   }
 }
