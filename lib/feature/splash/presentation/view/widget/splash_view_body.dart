@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:team_task/core/api/end_points.dart';
+import 'package:team_task/core/cache/cache_helper.dart';
 import 'package:team_task/core/utils/app_colors.dart';
 import 'package:team_task/core/utils/assets.dart';
 import 'package:team_task/feature/auth/presentation/view/login_view.dart';
+import 'package:team_task/feature/home/presentation/view/home_view.dart';
 import 'package:team_task/feature/splash/presentation/view/widget/sliding_text.dart';
 
 class SplashViewBody extends StatefulWidget {
@@ -41,8 +44,13 @@ class _SplashViewBodyState extends State<SplashViewBody>
 
   void navigateToLogin() {
     Future.delayed(const Duration(seconds: 3), () {
+      var checkedislogin = CacheHelper.getDataString(key: ApiKey.token);
+      if (checkedislogin == null) {
+        Navigator.pushReplacementNamed(context, LoginView.routeName);
+      } else {
+        Navigator.pushReplacementNamed(context, HomeView.routeName);
+      }
       // ignore: use_build_context_synchronously
-      Navigator.pushReplacementNamed(context, LoginView.routeName);
     });
   }
 

@@ -6,7 +6,7 @@ class ServerException implements Exception {
 
   ServerException({required this.errorModel});
   @override
-  String toString() => '${errorModel.errorMessage}';
+  String toString() => errorModel.errorMessage;
 }
 
 void handleDioException(DioException e) {
