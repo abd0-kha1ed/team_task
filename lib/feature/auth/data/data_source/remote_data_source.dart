@@ -5,24 +5,33 @@ import 'package:team_task/core/api/end_points.dart';
 import 'package:team_task/core/errors/server_exsption.dart';
 import 'package:team_task/feature/auth/data/model/login_model.dart';
 import 'package:team_task/feature/auth/data/model/register_model.dart';
+import 'package:team_task/core/cache/cache_helper.dart';
 
 class RemoteDataSource {
   final DioConsumer api;
 
   RemoteDataSource({required this.api});
+
   Future<Either<ServerException, LoginModel>> login({
     required String email,
     required String password,
   }) async {
     try {
       final response = await api.post(
-        EndPoint.signIn,
-        data: {'email': email, 'password': password},
+        EndPoint.login,
+        queryParameters: {
+          ApiKey.email: email,
+          ApiKey.password: password,
+        },
       );
-      final user = LoginModel.fromJson(response);
+
+      final user = LoginModel.fromJson(response.data);
+
       final decodedToken = JwtDecoder.decode(user.refreshToken);
-      // CacheHelper.saveData(key: ApiKey.token, value: user.refreshtoken);
-      // CacheHelper.saveData(key: ApiKey.id, value: decodedToken[ApiKey.id]);
+
+      // Cache the token and user ID
+      CacheHelper.saveData(key: ApiKey.token, value: user.refreshToken);
+      CacheHelper.saveData(key: ApiKey.id, value: decodedToken[ApiKey.id]);
 
       return Right(user);
     } on ServerException catch (e) {
@@ -37,12 +46,19 @@ class RemoteDataSource {
   }) async {
     try {
       final response = await api.post(
-        EndPoint.signUp,
-        data: {'email': email, 'password': password, 'name': name},
+        EndPoint.register,
+        queryParameters: {
+          ApiKey.email: email,
+          ApiKey.password: password,
+          ApiKey.name: name,
+        },
       );
-      final user = RegisterModel.fromJson(response);
-      // CacheHelper.saveData(key: ApiKey.token, value: user.refreshtoken);
-      // CacheHelper.saveData(key: ApiKey.id, value: user.id);
+
+      final user = RegisterModel.fromJson(response.data);
+
+      // Cache token and ID if returned
+      // CacheHelper().saveData(key: ApiKey.token, value: user.token);
+      // CacheHelper().saveData(key: ApiKey.id, value: user.id);
 
       return Right(user);
     } on ServerException catch (e) {
@@ -52,8 +68,12 @@ class RemoteDataSource {
 
   Future<Either<ServerException, LoginModel>> logout() async {
     try {
-      final response = await api.post(EndPoint.signOut);
-      return Right(LoginModel.fromJson(response));
+      final response = await api.post(
+        EndPoint.logout,
+        // token will be automatically injected by interceptor
+      );
+
+      return Right(LoginModel.fromJson(response.data));
     } on ServerException catch (e) {
       return Left(ServerException(errorModel: e.errorModel));
     }

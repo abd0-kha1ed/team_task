@@ -12,23 +12,22 @@ class LoginModel extends LoginEntity {
     required this.refreshToken,
   });
 
-  // from json
   factory LoginModel.fromJson(Map<String, dynamic> json) {
+    final data = json['data'] ?? json; // fallback if wrapped
     return LoginModel(
-      id: json['id'],
-      email: json['email'],
-      password: json['password'],
-      accessToken: json['access_token'],
-      refreshToken: json['refresh_token'],
+      id: data['id'] ?? 0,
+      email: data['email'] ?? '',
+      password: '', // don't get password from response
+      accessToken: data['access_token'] ?? '',
+      refreshToken: data['refresh_token'] ?? '',
     );
   }
 
-  // to json
   Map<String, dynamic> toJson() {
     return {
       'id': id,
       'email': email,
-      'password': password,
+      // Do not serialize password unless absolutely needed
       'access_token': accessToken,
       'refresh_token': refreshToken,
     };

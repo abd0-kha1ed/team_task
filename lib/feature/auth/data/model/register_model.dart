@@ -4,6 +4,7 @@ class RegisterModel extends RegisterEntity {
   final String id;
   final String accessToken;
   final String refreshToken;
+
   RegisterModel(
     this.id,
     this.accessToken,
@@ -14,15 +15,18 @@ class RegisterModel extends RegisterEntity {
   });
 
   factory RegisterModel.fromJson(Map<String, dynamic> json) {
+    final data = json['data'] ?? json;
+
     return RegisterModel(
-      json['id'] as String,
-      json['access_token'] as String,
-      json['refresh_token'] as String,
-      name: json['name'] as String,
-      email: json['email'] as String,
-      password: json['password'] as String,
+      data['id']?.toString() ?? '',
+      data['access_token'] ?? '',
+      data['refresh_token'] ?? '',
+      name: data['name'] ?? '',
+      email: data['email'] ?? '',
+      password: '', // Password should not come from API
     );
   }
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -30,7 +34,7 @@ class RegisterModel extends RegisterEntity {
       'refresh_token': refreshToken,
       'name': name,
       'email': email,
-      'password': password,
+      // Optional: don't send password back in `toJson` unless needed
     };
   }
 }

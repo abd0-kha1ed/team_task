@@ -9,6 +9,7 @@ class AuthRepoImpl implements AuthRepo {
   final RemoteDataSource remoteDataSource;
 
   AuthRepoImpl({required this.remoteDataSource});
+
   @override
   Future<Either<ServerException, LoginEntity>> login({
     required String email,
@@ -18,9 +19,8 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<Either<ServerException, dynamic>> logout() {
-    // TODO: implement logout
-    throw UnimplementedError();
+  Future<Either<ServerException, dynamic>> logout() async {
+    return await remoteDataSource.logout();
   }
 
   @override

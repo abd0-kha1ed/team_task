@@ -12,7 +12,7 @@ getIt.registerSingleton<SharedPreferences>(sharedPreferences);
 
   getIt.registerSingleton<DioConsumer>(
     DioConsumer(
-      dio: Dio(),
+      Dio(),
     ),
   );
 
