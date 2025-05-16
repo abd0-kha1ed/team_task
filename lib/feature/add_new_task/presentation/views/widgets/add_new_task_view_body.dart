@@ -13,31 +13,46 @@ class AddNewTaskViewBody extends StatefulWidget {
 class _AddNewTaskViewBodyState extends State<AddNewTaskViewBody> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
-
+  final GlobalKey<FormState> _formKey = GlobalKey();
+  AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: ListView(
-        shrinkWrap: true,
-        children: [
-          CustomInput(label: 'Title', controller: _titleController),
-          const SizedBox(height: 12),
+    return Form(
+      key: _formKey,
 
-          CustomInput(
-            label: 'Description',
-            controller: _descriptionController,
-            maxLines: 4,
-          ),
-          const SizedBox(height: 28),
-          CustomButton(
-            text: 'create',
-            color: AppColors.secondary,
-            textColor: Colors.black,
-            borderRadius: 22,
-            onPressed: () {},
-          ),
-        ],
+      autovalidateMode: _autovalidateMode,
+
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            CustomInput(label: 'Title', controller: _titleController),
+            const SizedBox(height: 12),
+
+            CustomInput(
+              label: 'Description',
+              controller: _descriptionController,
+              maxLines: 4,
+            ),
+            const SizedBox(height: 28),
+            CustomButton(
+              text: 'create',
+              color: AppColors.secondary,
+              textColor: Colors.black,
+              borderRadius: 22,
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  _formKey.currentState!.save();
+                } else {
+                  setState(() {
+                    _autovalidateMode = AutovalidateMode.always;
+                  });
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
