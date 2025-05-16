@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:team_task/core/api/dio_consumer.dart';
 import 'package:team_task/core/api/end_points.dart';
@@ -20,6 +22,7 @@ class AddNewTaskRemoteDataSource {
       );
       return Right(TaskModel.fromJson(response.data));
     } on ServerException catch (e) {
+      log('ServerException: ${e.errorModel.errorMessage}');
       return Left(e);
     }
   }

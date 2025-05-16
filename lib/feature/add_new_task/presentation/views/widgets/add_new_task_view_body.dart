@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_task/core/utils/app_colors.dart';
 import 'package:team_task/core/widget/custom_button.dart';
+import 'package:team_task/feature/add_new_task/domain/enitites/task_entity.dart';
+import 'package:team_task/feature/add_new_task/presentation/manger/cubit/add_new_task_cubit.dart';
 import 'package:team_task/feature/add_new_task/presentation/views/widgets/custom_input.dart';
 
 class AddNewTaskViewBody extends StatefulWidget {
@@ -15,6 +18,7 @@ class _AddNewTaskViewBodyState extends State<AddNewTaskViewBody> {
   final _descriptionController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey();
   AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
+  String? _title, _description;
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -27,10 +31,20 @@ class _AddNewTaskViewBodyState extends State<AddNewTaskViewBody> {
         child: ListView(
           shrinkWrap: true,
           children: [
-            CustomInput(label: 'Title', controller: _titleController),
+            CustomInput(
+              onsaved: (value) {
+                _title = value;
+              },
+
+              label: 'Title',
+              controller: _titleController,
+            ),
             const SizedBox(height: 12),
 
             CustomInput(
+              onsaved: (value) {
+                _description = value;
+              },
               label: 'Description',
               controller: _descriptionController,
               maxLines: 4,
@@ -44,6 +58,15 @@ class _AddNewTaskViewBodyState extends State<AddNewTaskViewBody> {
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
+
+                  context.read<AddNewTaskCubit>().addNewTask(
+                    TaskEntity(
+                      title: _title!,
+                      description: _description!,
+                      dueData:
+                          "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}",
+                    ),
+                  );
                 } else {
                   setState(() {
                     _autovalidateMode = AutovalidateMode.always;
