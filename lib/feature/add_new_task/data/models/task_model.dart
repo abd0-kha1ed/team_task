@@ -14,11 +14,4 @@ class TaskModel extends TaskEntity {
       description: json[ApiKey.description],
     );
   }
-  toJson() {
-    return {
-      ApiKey.id: id,
-      ApiKey.title: title,
-      ApiKey.description: description,
-    };
-  }
 }
