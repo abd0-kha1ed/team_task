@@ -5,10 +5,8 @@ import 'package:team_task/core/utils/text_styles.dart';
 import 'package:team_task/core/widget/custom_button.dart';
 import 'package:team_task/feature/auth/presentation/manager/login_cubit/login_cubit.dart';
 import 'package:team_task/feature/auth/presentation/view/register_view.dart';
-
 import 'package:team_task/feature/auth/presentation/view/widget/custom_text_field.dart';
 import 'package:team_task/feature/auth/presentation/view/widget/validation_widget.dart';
-import 'package:team_task/feature/home/presentation/view/home_view.dart';
 
 class LoginViewBody extends StatefulWidget {
   const LoginViewBody({super.key});
