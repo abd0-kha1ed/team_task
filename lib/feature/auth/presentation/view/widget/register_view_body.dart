@@ -7,7 +7,6 @@ import 'package:team_task/feature/auth/presentation/manager/register_cubit/regis
 import 'package:team_task/feature/auth/presentation/view/widget/custom_text_field.dart';
 import 'package:team_task/feature/auth/presentation/view/widget/password_conditions_widget.dart';
 import 'package:team_task/feature/auth/presentation/view/widget/validation_widget.dart';
-import 'package:team_task/feature/home/presentation/view/home_view.dart';
 
 class RegisterViewBody extends StatefulWidget {
   const RegisterViewBody({super.key});
@@ -58,232 +57,210 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: BlocConsumer<RegisterCubit, RegisterState>(
-          listener: (context, state) {
-            if (state is RegisterFailure) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.errorMessage),
-                  backgroundColor: Colors.red,
+
+        child: Form(
+          key: formKey,
+          autovalidateMode: autovalidateMode,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 48),
+              Text(
+                'Hello',
+                style: AppTextStyles.semiBold48.copyWith(
+                  color: AppColors.primary,
                 ),
-              );
-            } else if (state is RegisterSuccess) {
-              // Navigate to the next screen or show success message
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                HomeView.routeName, // Replace with your home route name
-                (route) => false,
-              );
-            }
-          },
-          builder: (context, state) {
-            return Form(
-              key: formKey,
-              autovalidateMode: autovalidateMode,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              ),
+              Text('There!', style: AppTextStyles.semiBold48),
+              const SizedBox(height: 12),
+              Text(
+                'Create an account to access your saved progress and get real-time update on all your tasks.',
+                style: AppTextStyles.regular10.copyWith(
+                  color: AppColors.textSecondary,
+                ),
+              ),
+              const SizedBox(height: 40),
+
+              // Name Field
+              CustomTextField(
+                onChanged: (value) => name = value,
+                hintText: 'Name',
+                controller: nameController,
+                keyboardType: TextInputType.name,
+                prefixIcon: Icons.person_outline,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your name';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+
+              // Email Field
+              CustomTextField(
+                onChanged: (value) => email = value,
+                hintText: 'E-Mail',
+                controller: emailController,
+                keyboardType: TextInputType.emailAddress,
+                prefixIcon: Icons.email_outlined,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your email';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+
+              // Password Field
+              CustomTextField(
+                onChanged: (value) => password = value,
+                hintText: 'Password',
+                controller: passwordController,
+                obscureText: isobscurePassword,
+                prefixIcon: Icons.lock_outline,
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    isobscurePassword ? Icons.visibility : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      isobscurePassword = !isobscurePassword;
+                    });
+                  },
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your password';
+                  }
+                  if (!has8Characters(value)) {
+                    return 'Password must be at least 8 characters';
+                  }
+                  if (!hasNumber(value)) {
+                    return 'Password must contain at least 1 number';
+                  }
+                  if (!hasUpperAndLower(value)) {
+                    return 'Password must contain both upper and lower case letters';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+
+              // Confirm Password Field
+              CustomTextField(
+                onChanged: (value) => confirmPassword = value,
+                hintText: 'Confirm Password',
+                controller: confirmPasswordController,
+                obscureText: isobscureConfirmPassword,
+                prefixIcon: Icons.lock_outline,
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    isobscureConfirmPassword
+                        ? Icons.visibility
+                        : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      isobscureConfirmPassword = !isobscureConfirmPassword;
+                    });
+                  },
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please confirm your password';
+                  }
+                  if (value != passwordController.text) {
+                    return 'Passwords do not match';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 20),
+
+              PasswordConditions(
+                text: 'At least 8 characters',
+                isValid: has8Characters(passwordController.text),
+              ),
+              const SizedBox(height: 4),
+
+              PasswordConditions(
+                text: 'At least 1 number',
+                isValid: hasNumber(passwordController.text),
+              ),
+              const SizedBox(height: 4),
+
+              PasswordConditions(
+                text: 'Both upper and lower case letters',
+                isValid: hasUpperAndLower(passwordController.text),
+              ),
+              const SizedBox(height: 48),
+              const SizedBox(height: 48),
+
+              // Terms and Conditions
+              ValidationWidget(
+                text:
+                    'By agreeing to the terms and conditions, you are entering into a legally binding contract with the service provider.',
+                isChecked: false,
+                onChanged: (value) {
+                  // Handle terms checkbox
+                },
+              ),
+              const SizedBox(height: 16),
+
+              // Submit Button
+              CustomButton(
+                text: 'Sign In',
+                color: AppColors.secondary,
+                borderRadius: 60,
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
+                    setState(() {
+                      autovalidateMode = AutovalidateMode.disabled;
+                      // Call your registration function here
+                      context.read<RegisterCubit>().register(
+                        name: name!,
+                        email: email!,
+                        password: password!,
+                      );
+                      nameController.clear();
+                      emailController.clear();
+                      passwordController.clear();
+                      confirmPasswordController.clear();
+                    });
+                  } else {
+                    setState(() {
+                      autovalidateMode = AutovalidateMode.always;
+                    });
+                  }
+                },
+              ),
+              const SizedBox(height: 20),
+
+              // Navigation to login
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 48),
-                  Text(
-                    'Hello',
-                    style: AppTextStyles.semiBold48.copyWith(
-                      color: AppColors.primary,
+                  const Text(
+                    'Already have an account?',
+                    style: AppTextStyles.regular12,
+                  ),
+                  const SizedBox(width: 4),
+                  GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: Text(
+                      'Login',
+                      style: AppTextStyles.semiBold12.copyWith(
+                        color: AppColors.primary,
+                      ),
                     ),
                   ),
-                  Text('There!', style: AppTextStyles.semiBold48),
-                  const SizedBox(height: 12),
-                  Text(
-                    'Create an account to access your saved progress and get real-time update on all your tasks.',
-                    style: AppTextStyles.regular10.copyWith(
-                      color: AppColors.textSecondary,
-                    ),
-                  ),
-                  const SizedBox(height: 40),
-
-                  // Name Field
-                  CustomTextField(
-                    onChanged: (value) => name = value,
-                    hintText: 'Name',
-                    controller: nameController,
-                    keyboardType: TextInputType.name,
-                    prefixIcon: Icons.person_outline,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your name';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 16),
-
-                  // Email Field
-                  CustomTextField(
-                    onChanged: (value) => email = value,
-                    hintText: 'E-Mail',
-                    controller: emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    prefixIcon: Icons.email_outlined,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your email';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 16),
-
-                  // Password Field
-                  CustomTextField(
-                    onChanged: (value) => password = value,
-                    hintText: 'Password',
-                    controller: passwordController,
-                    obscureText: isobscurePassword,
-                    prefixIcon: Icons.lock_outline,
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        isobscurePassword
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          isobscurePassword = !isobscurePassword;
-                        });
-                      },
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your password';
-                      }
-                      if (!has8Characters(value)) {
-                        return 'Password must be at least 8 characters';
-                      }
-                      if (!hasNumber(value)) {
-                        return 'Password must contain at least 1 number';
-                      }
-                      if (!hasUpperAndLower(value)) {
-                        return 'Password must contain both upper and lower case letters';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 16),
-
-                  // Confirm Password Field
-                  CustomTextField(
-                    onChanged: (value) => confirmPassword = value,
-                    hintText: 'Confirm Password',
-                    controller: confirmPasswordController,
-                    obscureText: isobscureConfirmPassword,
-                    prefixIcon: Icons.lock_outline,
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        isobscureConfirmPassword
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          isobscureConfirmPassword = !isobscureConfirmPassword;
-                        });
-                      },
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please confirm your password';
-                      }
-                      if (value != passwordController.text) {
-                        return 'Passwords do not match';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 20),
-
-                  PasswordConditions(
-                    text: 'At least 8 characters',
-                    isValid: has8Characters(passwordController.text),
-                  ),
-                  const SizedBox(height: 4),
-
-                  PasswordConditions(
-                    text: 'At least 1 number',
-                    isValid: hasNumber(passwordController.text),
-                  ),
-                  const SizedBox(height: 4),
-
-                  PasswordConditions(
-                    text: 'Both upper and lower case letters',
-                    isValid: hasUpperAndLower(passwordController.text),
-                  ),
-                  const SizedBox(height: 48),
-                  const SizedBox(height: 48),
-
-                  // Terms and Conditions
-                  ValidationWidget(
-                    text:
-                        'By agreeing to the terms and conditions, you are entering into a legally binding contract with the service provider.',
-                    isChecked: false,
-                    onChanged: (value) {
-                      // Handle terms checkbox
-                    },
-                  ),
-                  const SizedBox(height: 16),
-
-                  // Submit Button
-                  CustomButton(
-                    text: 'Sign In',
-                    color: AppColors.secondary,
-                    borderRadius: 60,
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        setState(() {
-                          autovalidateMode = AutovalidateMode.disabled;
-                          // Call your registration function here
-                          context.read<RegisterCubit>().register(
-                            name: name!,
-                            email: email!,
-                            password: password!,
-                          );
-                          nameController.clear();
-                          emailController.clear();
-                          passwordController.clear();
-                          confirmPasswordController.clear();
-                        });
-                      } else {
-                        setState(() {
-                          autovalidateMode = AutovalidateMode.always;
-                        });
-                      }
-                    },
-                  ),
-                  const SizedBox(height: 20),
-
-                  // Navigation to login
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'Already have an account?',
-                        style: AppTextStyles.regular12,
-                      ),
-                      const SizedBox(width: 4),
-                      GestureDetector(
-                        onTap: () => Navigator.pop(context),
-                        child: Text(
-                          'Login',
-                          style: AppTextStyles.semiBold12.copyWith(
-                            color: AppColors.primary,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
                 ],
               ),
-            );
-          },
+              const SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
     );

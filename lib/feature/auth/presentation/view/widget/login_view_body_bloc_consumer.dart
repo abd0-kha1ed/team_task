@@ -3,9 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_task/core/widget/modal_progress_widget.dart';
 import 'package:team_task/feature/auth/presentation/manager/login_cubit/login_cubit.dart';
 import 'package:team_task/feature/auth/presentation/view/widget/login_view_body.dart';
+import 'package:team_task/feature/home/presentation/view/home_view.dart';
 
-class LoginViewBodyBlocConsumer extends StatelessWidget {
-  const LoginViewBodyBlocConsumer({super.key});
+class LoginViewBodyblocConsumer extends StatelessWidget {
+  const LoginViewBodyblocConsumer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +27,7 @@ class LoginViewBodyBlocConsumer extends StatelessWidget {
               backgroundColor: Colors.green,
             ),
           );
+          Navigator.pushReplacementNamed(context, HomeView.routeName);
         }
       },
       builder: (context, state) {
