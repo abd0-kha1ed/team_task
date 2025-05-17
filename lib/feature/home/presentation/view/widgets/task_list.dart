@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:team_task/feature/home/domain/entity/task_entity.dart';
 import 'package:team_task/feature/home/presentation/view/widgets/task_card.dart';
 
 class TaskList extends StatelessWidget {
-  final List<Map<String, dynamic>> tasks;
+  final List<TaskEntity> tasks;
 
   const TaskList({super.key, required this.tasks});
 
@@ -14,12 +15,11 @@ class TaskList extends StatelessWidget {
       itemBuilder: (context, index) {
         final task = tasks[index];
         return TaskCard(
-          title: task['title'],
-          subtitle: task['subtitle'],
-          time: task['time'],
-          status: task['status'],
-          statusColor: task['statusColor'],
-          isChecked: task['isChecked'] ?? false,
+          task: task,
+          onChanged: (value) {
+            // Handle checkbox state change
+            // You can use a callback or a state management solution to update the task's state
+          },
         );
       },
     );

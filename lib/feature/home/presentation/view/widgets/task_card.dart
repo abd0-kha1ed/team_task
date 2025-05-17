@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:team_task/feature/home/domain/entity/task_entity.dart';
 
 class TaskCard extends StatelessWidget {
-  final String title, subtitle, time, status;
-  final Color statusColor;
-  final bool isChecked;
+  final TaskEntity task;
    final Function(bool?)? onChanged;
 
   const TaskCard({
     super.key,
-    required this.title,
-    required this.subtitle,
-    required this.time,
-    required this.status,
-    required this.statusColor, required this.isChecked, this.onChanged,
+    
+     this.onChanged, required this.task,
   });
 
   @override
@@ -20,11 +16,10 @@ class TaskCard extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.only(bottom: 16),
       child: ListTile(
-        title: Text(title),
-        subtitle: Text(subtitle),
-        trailing: Text(status, style: TextStyle(color: statusColor)),
+        title: Text(task.title),
+        subtitle: Text(task.subtitle),
         leading: Checkbox(
-          value: isChecked,
+          value: task.isChecked,
           onChanged: onChanged,
         ),
       ),

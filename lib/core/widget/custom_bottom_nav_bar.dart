@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:team_task/feature/calendar/presentation/view/calendar_view.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   final int currentIndex;
@@ -13,16 +12,14 @@ class CustomBottomNavBar extends StatelessWidget {
       case 0:
         Navigator.pushReplacementNamed(context, '/home');
         break;
+
       case 1:
-        Navigator.pushReplacementNamed(context, CalendarView.routeName);
-        break;
-      case 2:
         // FAB-like action (e.g., open modal or special route)
         break;
-      case 3:
+      case 2:
         Navigator.pushReplacementNamed(context, '/search');
         break;
-      case 4:
+      case 3:
         Navigator.pushReplacementNamed(context, '/profile');
         break;
     }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:team_task/feature/add_new_task/presentation/views/add_new_task_view.dart';
 import 'package:team_task/feature/auth/presentation/view/login_view.dart';
 import 'package:team_task/feature/auth/presentation/view/register_view.dart';
-import 'package:team_task/feature/calendar/presentation/view/calendar_view.dart';
 import 'package:team_task/feature/home/presentation/view/home_view.dart';
 
 import 'package:team_task/feature/splash/presentation/view/splash_view.dart';
@@ -18,8 +17,7 @@ Route<dynamic> onGenerateRoutes(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => const RegisterView());
     case HomeView.routeName:
       return MaterialPageRoute(builder: (context) => const HomeView());
-    case CalendarView.routeName:
-      return MaterialPageRoute(builder: (context) => const CalendarView());
+
     case AddNewTaskView.routeName:
       return MaterialPageRoute(builder: (context) => const AddNewTaskView());
     default:

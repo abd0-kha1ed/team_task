@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:team_task/feature/home/data/model/task_model.dart';
+import 'package:team_task/feature/home/domain/entity/task_entity.dart';
 import 'package:team_task/feature/home/presentation/view/widgets/task_app_bar.dart';
-import 'package:team_task/feature/home/presentation/view/widgets/task_highlight_card.dart';
-import 'package:team_task/feature/home/presentation/view/widgets/task_list.dart';
 
 class HomeViewBody extends StatefulWidget {
-  const HomeViewBody({super.key});
+  const HomeViewBody({super.key, required this.tasks});
+  final List<TaskEntity> tasks;
 
   @override
   State<HomeViewBody> createState() => _HomeViewBodyState();
@@ -12,48 +13,37 @@ class HomeViewBody extends StatefulWidget {
 
 class _HomeViewBodyState extends State<HomeViewBody> {
   int selectedTabIndex = 0;
+  late List<TaskEntity> filteredTasks;
 
-  final List<Map<String, dynamic>> allTasks = const [
-    {
-      'title': 'Task 5 Meeting',
-      'subtitle': 'Jakxy mobile app meeting',
-      'time': '09:00 pm',
-      'status': 'completed',
-      'statusColor': Colors.green,
-    },
-    {
-      'title': 'Task 5 Meeting',
-      'subtitle': 'Jakxy mobile app meeting',
-      'time': '09:00 pm',
-      'status': 'pending',
-      'statusColor': Colors.amber,
-    },
-    {
-      'title': 'Task 5 Meeting',
-      'subtitle': 'Jakxy mobile app meeting',
-      'time': '09:00 pm',
-      'status': 'canceled',
-      'statusColor': Colors.red,
-    },
-    {
-      'title': 'Task 5 Meeting',
-      'subtitle': 'Jakxy mobile app meeting',
-      'time': '09:00 pm',
-      'status': 'canceled',
-      'statusColor': Colors.red,
-    },
-  ];
+  @override
+  void initState() {
+    super.initState();
+    filteredTasks = widget.tasks;
+  }
 
-  List<Map<String, dynamic>> getFilteredTasks() {
-    if (selectedTabIndex == 1) {
-      return allTasks.where((task) => task['status'] == 'pending').toList();
-    } else if (selectedTabIndex == 2) {
-      return allTasks.where((task) => task['status'] == 'completed').toList();
-    } else if (selectedTabIndex == 3) {
-      return allTasks.where((task) => task['status'] == 'canceled').toList();
-    } else {
-      return allTasks;
-    }
+  void filterTasks() {
+    setState(() {
+      if (selectedTabIndex == 1) {
+        filteredTasks = widget.tasks.where((task) => !task.isChecked).toList();
+      } else if (selectedTabIndex == 2) {
+        filteredTasks = widget.tasks.where((task) => task.isChecked).toList();
+      } else {
+        filteredTasks = widget.tasks;
+      }
+    });
+  }
+
+  void toggleTaskCompletion(int index) {
+    setState(() {
+      final task = filteredTasks[index];
+      filteredTasks[index] = TaskModel(
+        id: task.id,
+        title: task.title,
+        subtitle: task.subtitle,
+        date: task.date,
+        isChecked: !task.isChecked,
+      );
+    });
   }
 
   @override
@@ -63,17 +53,50 @@ class _HomeViewBodyState extends State<HomeViewBody> {
         children: [
           TaskTabBar(
             selectedIndex: selectedTabIndex,
-            onTap: (index) => setState(() => selectedTabIndex = index),
+            onTap: (index) {
+              selectedTabIndex = index;
+              filterTasks();
+            },
           ),
           Expanded(
             child: AnimatedSwitcher(
-              duration: Duration(milliseconds: 400),
-              transitionBuilder:
-                  (child, animation) =>
-                      FadeTransition(opacity: animation, child: child),
-              child: TaskList(
+              duration: const Duration(milliseconds: 400),
+              child: ListView.separated(
                 key: ValueKey<int>(selectedTabIndex),
-                tasks: getFilteredTasks(),
+                itemCount: filteredTasks.length,
+                separatorBuilder: (_, __) => const SizedBox(height: 8),
+                itemBuilder: (context, index) {
+                  final task = filteredTasks[index];
+                  return ListTile(
+                    tileColor: Colors.grey[200],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    title: Text(
+                      task.title,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (task.subtitle.isNotEmpty) Text(task.subtitle),
+                        Text(
+                          "Due: ${task.date}",
+                          style: const TextStyle(fontSize: 12),
+                        ),
+                      ],
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(
+                        task.isChecked
+                            ? Icons.check_circle
+                            : Icons.radio_button_unchecked,
+                        color: task.isChecked ? Colors.green : Colors.grey,
+                      ),
+                      onPressed: () => toggleTaskCompletion(index),
+                    ),
+                  );
+                },
               ),
             ),
           ),

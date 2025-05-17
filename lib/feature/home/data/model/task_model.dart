@@ -1,3 +1,4 @@
+import 'package:team_task/core/api/end_points.dart';
 import 'package:team_task/feature/home/domain/entity/task_entity.dart';
 
 class TaskModel extends TaskEntity {
@@ -5,18 +6,18 @@ class TaskModel extends TaskEntity {
     required super.id,
     required super.title,
     required super.subtitle,
-    required super.time,
-    required super.status,
+    required super.date,
     required super.isChecked,
   });
   factory TaskModel.fromJson(Map<String, dynamic> json) {
     return TaskModel(
-      id: json['id'],
-      title: json['title'],
-      subtitle: json['subtitle'],
-      time: json['time'],
-      status: json['status'],
-      isChecked: json['isChecked'] ?? false,
+      id: json[ApiKey.id],
+      title: json[ApiKey.title],
+      subtitle: json[ApiKey.description] ?? '',
+      date:
+          json[ApiKey.dueDate] ??
+          "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}",
+      isChecked: json[ApiKey.isCompleted] == 1,
     );
   }
 }
