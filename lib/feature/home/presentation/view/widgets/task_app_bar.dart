@@ -12,7 +12,7 @@ class TaskTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tabs = ['All Tasks', 'On Going', 'Completed', 'Canceled'];
+    final tabs = ['All Tasks', 'On Going', 'Completed'];
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Row(

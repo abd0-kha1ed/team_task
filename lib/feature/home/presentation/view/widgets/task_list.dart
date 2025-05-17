@@ -19,6 +19,7 @@ class TaskList extends StatelessWidget {
           time: task['time'],
           status: task['status'],
           statusColor: task['statusColor'],
+          isChecked: task['isChecked'] ?? false,
         );
       },
     );

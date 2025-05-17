@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_task/core/utils/app_colors.dart';
 import 'package:team_task/core/widget/custom_button.dart';
-import 'package:team_task/feature/add_new_task/domain/enitites/task_entity.dart';
+import 'package:team_task/feature/add_new_task/domain/enitites/add_new_task_entity.dart';
 import 'package:team_task/feature/add_new_task/presentation/manger/cubit/add_new_task_cubit.dart';
 import 'package:team_task/feature/add_new_task/presentation/views/widgets/custom_input.dart';
 
@@ -60,13 +60,15 @@ class _AddNewTaskViewBodyState extends State<AddNewTaskViewBody> {
                   _formKey.currentState!.save();
 
                   context.read<AddNewTaskCubit>().addNewTask(
-                    TaskEntity(
+                    AddNewTaskEntity(
                       title: _title!,
                       description: _description!,
                       dueData:
                           "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}",
                     ),
                   );
+                  _titleController.clear();
+                  _descriptionController.clear();
                 } else {
                   setState(() {
                     _autovalidateMode = AutovalidateMode.always;

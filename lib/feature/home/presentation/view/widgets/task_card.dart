@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class TaskCard extends StatelessWidget {
   final String title, subtitle, time, status;
   final Color statusColor;
+  final bool isChecked;
+   final Function(bool?)? onChanged;
 
   const TaskCard({
     super.key,
@@ -10,7 +12,7 @@ class TaskCard extends StatelessWidget {
     required this.subtitle,
     required this.time,
     required this.status,
-    required this.statusColor,
+    required this.statusColor, required this.isChecked, this.onChanged,
   });
 
   @override
@@ -21,7 +23,10 @@ class TaskCard extends StatelessWidget {
         title: Text(title),
         subtitle: Text(subtitle),
         trailing: Text(status, style: TextStyle(color: statusColor)),
-        leading: const Icon(Icons.access_time, color: Colors.grey),
+        leading: Checkbox(
+          value: isChecked,
+          onChanged: onChanged,
+        ),
       ),
     );
   }

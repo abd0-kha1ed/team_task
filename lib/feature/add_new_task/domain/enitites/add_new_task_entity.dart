@@ -1,11 +1,11 @@
 import 'package:team_task/core/api/end_points.dart';
 
-class TaskEntity {
+class AddNewTaskEntity {
   final String title;
   final String description;
   final String dueData;
 
-  TaskEntity({
+  AddNewTaskEntity({
     required this.title,
     required this.description,
     required this.dueData,

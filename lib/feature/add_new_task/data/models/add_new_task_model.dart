@@ -1,15 +1,15 @@
 import 'package:team_task/core/api/end_points.dart';
-import 'package:team_task/feature/add_new_task/domain/enitites/task_entity.dart';
+import 'package:team_task/feature/add_new_task/domain/enitites/add_new_task_entity.dart';
 
-class TaskModel extends TaskEntity {
-  TaskModel({
+class AddNewTaskModel extends AddNewTaskEntity {
+  AddNewTaskModel({
     required super.title,
     required super.description,
     required super.dueData,
   });
 
-  factory TaskModel.fromJson(Map<String, dynamic> json) {
-    return TaskModel(
+  factory AddNewTaskModel.fromJson(Map<String, dynamic> json) {
+    return AddNewTaskModel(
       title: json[ApiKey.title],
       description: json[ApiKey.description],
       dueData: json[ApiKey.dueDate] ?? DateTime.now().toString(),

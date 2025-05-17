@@ -8,7 +8,7 @@ class AddNewTaskInitial extends AddNewTaskState {}
 class AddNewTaskLoading extends AddNewTaskState {}
 
 class AddNewTaskSuccess extends AddNewTaskState {
-  final TaskEntity taskEntity;
+  final AddNewTaskEntity taskEntity;
   AddNewTaskSuccess({required this.taskEntity});
 }
 

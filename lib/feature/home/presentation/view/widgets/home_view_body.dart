@@ -61,7 +61,6 @@ class _HomeViewBodyState extends State<HomeViewBody> {
     return Scaffold(
       body: Column(
         children: [
-          const TaskHighlightCard(),
           TaskTabBar(
             selectedIndex: selectedTabIndex,
             onTap: (index) => setState(() => selectedTabIndex = index),
