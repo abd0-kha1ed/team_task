@@ -81,7 +81,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                       children: [
                         if (task.subtitle.isNotEmpty) Text(task.subtitle),
                         Text(
-                          "Due: ${task.date}",
+                          "Date: ${task.date}",
                           style: const TextStyle(fontSize: 12),
                         ),
                       ],
