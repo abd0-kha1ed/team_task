@@ -1,4 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:team_task/core/api/end_points.dart';
 
 class CacheHelper {
   static late SharedPreferences sharedPreferences;
@@ -54,5 +55,10 @@ class CacheHelper {
   /// Alias for saveData (optional)
   static Future<bool> put({required String key, required dynamic value}) async {
     return await saveData(key: key, value: value);
+  }
+
+  static Future<bool> removeToken({required String tokenKey}) async {
+    // أو أي اسم المفتاح اللي مخزنة عليه التوكن عندك
+    return await sharedPreferences.remove(tokenKey);
   }
 }

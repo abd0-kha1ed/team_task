@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -21,10 +23,7 @@ class RemoteDataSource {
     try {
       final response = await api.post(
         EndPoint.login,
-        queryParameters: {
-          ApiKey.email: email,
-          ApiKey.password: password,
-        },
+        queryParameters: {ApiKey.email: email, ApiKey.password: password},
       );
 
       final user = LoginModel.fromJson(response.data);
@@ -57,7 +56,8 @@ class RemoteDataSource {
         },
       );
 
-      if (response.statusCode == 302 || response.data is! Map<String, dynamic>) {
+      if (response.statusCode == 302 ||
+          response.data is! Map<String, dynamic>) {
         return Left(
           ServerException(
             errorModel: ErrorModel(
@@ -75,11 +75,14 @@ class RemoteDataSource {
     }
   }
 
-  Future<Either<ServerException, LoginModel>> logout() async {
+  Future<Either<ServerException, String>> logout() async {
     try {
       final response = await api.post(EndPoint.logout);
-      final user = LoginModel.fromJson(response.data);
-      return Right(user);
+      // حذف التوكن محليًا:
+      await CacheHelper.removeToken(tokenKey: ApiKey.token);
+
+      final message = response.data['message'] ?? 'Logged out successfully';
+      return Right(message);
     } on DioException catch (e) {
       return Left(_handleException(e));
     }
@@ -123,5 +126,16 @@ class RemoteDataSource {
         errorMessage: 'Unexpected error. Please try again.',
       ),
     );
+  }
+
+  Future<Either<ServerException, RegisterModel>> getUserData() async {
+    try {
+      final response = await api.get(EndPoint.profile);
+      final user = RegisterModel.fromJson(response.data);
+      return Right(user);
+    } on DioException catch (e) {
+      log('Error fetching user data: ${e.message}');
+      return Left(_handleException(e));
+    }
   }
 }

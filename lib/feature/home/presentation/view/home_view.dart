@@ -15,10 +15,10 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
-  final cubit = TaskCubit(taskRepo: getIt.get<TaskRepoImpl>());
-  cubit.getTasks();
-  return cubit;
-},
+        final cubit = TaskCubit(taskRepo: getIt.get<TaskRepoImpl>());
+        cubit.getTasks();
+        return cubit;
+      },
 
       child: Scaffold(
         appBar: AppBar(
@@ -55,4 +55,3 @@ class HomeView extends StatelessWidget {
     );
   }
 }
-

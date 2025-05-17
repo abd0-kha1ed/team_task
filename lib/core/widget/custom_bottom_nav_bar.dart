@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:team_task/feature/add_new_task/presentation/views/add_new_task_view.dart';
+import 'package:team_task/feature/profile/presentation/view/profile_view.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   final int currentIndex;
@@ -10,17 +12,27 @@ class CustomBottomNavBar extends StatelessWidget {
 
     switch (index) {
       case 0:
-        Navigator.pushReplacementNamed(context, '/home');
+        Navigator.of(
+          context,
+        ).pushNamedAndRemoveUntil('/home', (route) => false);
         break;
-
       case 1:
-        // FAB-like action (e.g., open modal or special route)
+        Navigator.of(
+          context,
+        ).pushNamedAndRemoveUntil('/calendar', (route) => false);
         break;
       case 2:
-        Navigator.pushReplacementNamed(context, '/search');
+        Navigator.pushNamed(context, AddNewTaskView.routeName);
         break;
       case 3:
-        Navigator.pushReplacementNamed(context, '/profile');
+        Navigator.of(
+          context,
+        ).pushNamedAndRemoveUntil('/search', (route) => false);
+        break;
+      case 4:
+        Navigator.of(
+          context,
+        ).pushNamedAndRemoveUntil(ProfileView.routeName, (route) => false);
         break;
     }
   }

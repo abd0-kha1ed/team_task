@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:team_task/core/cache/cache_helper.dart';
+import 'package:team_task/core/functions/custom_bloc_observer.dart';
 import 'package:team_task/core/functions/on_generate_routes.dart';
 import 'package:team_task/core/functions/service_locator.dart';
 import 'package:team_task/feature/splash/presentation/view/splash_view.dart';
 
-void main()async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final sharedPreferences = await SharedPreferences.getInstance();
   await CacheHelper.init();
   setupServiceLocator(sharedPreferences);
+  Bloc.observer = CustomBlocObserver();
 
-  
   runApp(TaskyApp());
 }
 

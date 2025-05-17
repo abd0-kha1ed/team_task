@@ -19,8 +19,13 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<Either<ServerException, dynamic>> logout() async {
-    return await remoteDataSource.logout();
+  Future<Either<ServerException, String>> logout() async {
+    try {
+      var result = await remoteDataSource.logout();
+      return result;
+    } on ServerException catch (e) {
+      return left(e);
+    }
   }
 
   @override
@@ -34,5 +39,15 @@ class AuthRepoImpl implements AuthRepo {
       password: password,
       name: name,
     );
+  }
+
+  @override
+  Future<Either<ServerException, RegisterEntity>> getUserData() async {
+    try {
+      var result = await remoteDataSource.getUserData();
+      return result;
+    } on ServerException catch (e) {
+      return left(e);
+    }
   }
 }

@@ -14,4 +14,5 @@ abstract class AuthRepo {
     required String name,
   });
   Future<Either<ServerException, dynamic>> logout();
+  Future<Either<ServerException, RegisterEntity>> getUserData();
 }
