@@ -1,6 +1,7 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:team_task/feature/auth/presentation/view/login_view.dart';
 import 'package:team_task/feature/home/presentation/manager/cubit/task_cubit.dart';
 import 'package:team_task/feature/home/presentation/view/widgets/home_view_body.dart';
 
@@ -11,6 +12,9 @@ class HomeViewBodyBlocConsumer extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<TaskCubit, TaskState>(
       builder: (context, state) {
+        if (state is TaskUnauthicated) {
+          Navigator.pushReplacementNamed(context, LoginView.routeName);
+        }
         if (state is TaskLoading) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is TaskError) {

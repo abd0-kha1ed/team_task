@@ -23,8 +23,10 @@ class HomeView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Hello Ahmed 👋', style: TextStyle(color: Colors.black)),
-              Text('Today is Monday, April 28',
-                  style: TextStyle(fontSize: 12, color: Colors.grey)),
+              Text(
+                'Today is Monday, April 28',
+                style: TextStyle(fontSize: 12, color: Colors.grey),
+              ),
             ],
           ),
           actions: const [
@@ -35,8 +37,10 @@ class HomeView extends StatelessWidget {
         body: const HomeViewBodyBlocConsumer(),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            final isAdded =
-                await Navigator.pushNamed(context, AddNewTaskView.routeName);
+            final isAdded = await Navigator.pushNamed(
+              context,
+              AddNewTaskView.routeName,
+            );
             if (isAdded == true) {
               context.read<TaskCubit>().getTasks(); // ✅ سيعمل بعد ربط صحيح
             }

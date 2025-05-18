@@ -1,0 +1,19 @@
+import 'package:bloc/bloc.dart';
+import 'package:meta/meta.dart';
+import 'package:team_task/feature/home/domain/entity/task_entity.dart';
+import 'package:team_task/feature/home/domain/repo/task_repo.dart';
+
+part 'delete_task_state.dart';
+
+class DeleteTaskCubit extends Cubit<DeleteTaskState> {
+  final TaskRepo taskRepo;
+  DeleteTaskCubit({required this.taskRepo}) : super(DeleteTaskInitial());
+  Future<void> deleteTask(TaskEntity taskEntity) async {
+    emit(DeleteTaskLoading());
+    var result = await taskRepo.deleteTask(taskEntity);
+    result.fold(
+      (l) => emit(DeleteTaskError(l.errorModel.errorMessage)),
+      (r) => emit(DeleteTaskSuccess(r)),
+    );
+  }
+}

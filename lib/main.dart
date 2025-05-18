@@ -18,11 +18,13 @@ void main() async {
   await CacheHelper.init();
   setupServiceLocator(sharedPreferences);
   Bloc.observer = CustomBlocObserver();
+  getIt.registerLazySingleton<TaskCubit>(
+    () => TaskCubit(taskRepo: getIt<TaskRepoImpl>()),
+  );
+  // ✅ تسجيل Cubit في service locator
 
-  getIt.registerLazySingleton<TaskCubit>(() => TaskCubit(taskRepo: getIt<TaskRepoImpl>()));
-final token = CacheHelper.getData(key: ApiKey.token);
-log('📌 Current Token: $token');
-
+  final token = CacheHelper.getData(key: ApiKey.token);
+  log('📌 Current Token: $token');
   runApp(TaskyApp());
 }
 

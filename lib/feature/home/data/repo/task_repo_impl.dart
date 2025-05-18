@@ -11,8 +11,13 @@ class TaskRepoImpl implements TaskRepo {
   @override
   Future<Either<ServerException, TaskEntity>> deleteTask(
     TaskEntity taskEntity,
-  ) {
-    throw UnimplementedError();
+  ) async {
+    try {
+      var result = await taskRemoteDataSource.deleteTask(taskEntity);
+      return result;
+    } on ServerException catch (e) {
+      return Left(e);
+    }
   }
 
   @override
