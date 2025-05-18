@@ -23,21 +23,4 @@ class GetProfileCubit extends Cubit<GetProfileState> {
       },
     );
   }
-
-  Future<void> logout() async {
-    emit(LogoutLoading());
-    var result = await authRepo.logout();
-    await result.fold(
-      (error) async {
-        emit(LogoutError(error: error.toString()));
-      },
-      (message) async {
-        // حذف التوكن محليًا بعد نجاح logout من الـ API
-        await CacheHelper.removeData(
-          key: ApiKey.token,
-        ); // تأكدي إن المفتاح 'token' صحيح
-        emit(LogoutSuccess(message: message));
-      },
-    );
-  }
 }

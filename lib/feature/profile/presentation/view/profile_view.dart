@@ -4,19 +4,32 @@ import 'package:team_task/core/functions/service_locator.dart';
 import 'package:team_task/core/widget/custom_bottom_nav_bar.dart';
 import 'package:team_task/feature/add_new_task/presentation/views/add_new_task_view.dart';
 import 'package:team_task/feature/auth/data/repo/auth_repo_impl.dart';
+import 'package:team_task/feature/profile/presentation/manger/cubit/cubit/logut_cubit.dart';
 import 'package:team_task/feature/profile/presentation/manger/cubit/get_profile_cubit.dart';
+
 import 'package:team_task/feature/profile/presentation/view/widgets/profile_view_body.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
   static const String routeName = '/profile';
+
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create:
-          (context) =>
-              GetProfileCubit(authRepo: getIt.get<AuthRepoImpl>())
-                ..getProfile(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create:
+              (context) =>
+                  GetProfileCubit(authRepo: getIt.get<AuthRepoImpl>())
+                    ..getProfile(),
+        ),
+        BlocProvider(
+          create:
+              (context) => LogoutCubit(
+                authRepo: getIt.get<AuthRepoImpl>(),
+              ), // provide LogoutCubit
+        ),
+      ],
       child: Scaffold(
         body: BlocBuilder<GetProfileCubit, GetProfileState>(
           builder: (context, state) {

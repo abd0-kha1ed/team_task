@@ -37,8 +37,6 @@ void setupServiceLocator(SharedPreferences sharedPreferences) async {
     TaskRemoteDataSource(dio: getIt.get<DioConsumer>()),
   );
   getIt.registerSingleton<TaskRepoImpl>(
-    TaskRepoImpl(
-      taskRemoteDataSource: getIt.get<TaskRemoteDataSource>(),
-    ),
+    TaskRepoImpl(taskRemoteDataSource: getIt.get<TaskRemoteDataSource>()),
   );
 }
