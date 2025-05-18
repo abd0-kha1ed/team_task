@@ -14,7 +14,7 @@ class HomeViewBodyBlocConsumer extends StatelessWidget {
         if (state is TaskLoading) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is TaskError) {
-          return Center(child: Text(state.error));
+          return Center(child: Text('Error: ${state.error}'));
         } else if (state is TaskSuccess) {
           return HomeViewBody(tasks: state.tasks);
         } else {

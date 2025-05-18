@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:bloc/bloc.dart';
 // ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
@@ -8,13 +9,37 @@ part 'task_state.dart';
 
 class TaskCubit extends Cubit<TaskState> {
   final TaskRepo taskRepo;
-  TaskCubit({required this.taskRepo}) : super(TaskInitial());
+
+  final _taskStreamController = StreamController<List<TaskEntity>>.broadcast();
+  Stream<List<TaskEntity>> get taskStream => _taskStreamController.stream;
+
+  TaskCubit({required this.taskRepo}) : super(TaskInitial()) {
+    getTasks(); // تحميل أولي عند التهيئة
+  }
+
   Future<void> getTasks() async {
-    emit(TaskLoading());
-    var result = await taskRepo.getTasks();
-    result.fold(
-      (error) => emit(TaskError(error.toString())),
-      (taskEntity) => emit(TaskSuccess(taskEntity)),
-    );
+  print("🔁 getTasks() called");
+
+  emit(TaskLoading());
+
+  var result = await taskRepo.getTasks();
+  result.fold(
+    (error) {
+      print("❌ getTasks failed: $error");
+      emit(TaskError(error.toString()));
+    },
+    (taskEntity) {
+      print("✅ getTasks success: ${taskEntity.length} tasks");
+      emit(TaskSuccess(taskEntity));
+      _taskStreamController.add(taskEntity); // بث للواجهة
+    },
+  );
+}
+
+
+  @override
+  Future<void> close() {
+    _taskStreamController.close();
+    return super.close();
   }
 }
