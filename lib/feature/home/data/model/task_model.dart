@@ -11,8 +11,8 @@ class TaskModel extends TaskEntity {
   });
   factory TaskModel.fromJson(Map<String, dynamic> json) {
     return TaskModel(
-      id: json[ApiKey.id],
-      title: json[ApiKey.title],
+      id: json[ApiKey.id] ?? 0,
+      title: json[ApiKey.title] ?? '',
       subtitle: json[ApiKey.description] ?? '',
       date:
           json[ApiKey.dueDate] ??

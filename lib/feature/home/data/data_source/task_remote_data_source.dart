@@ -22,14 +22,12 @@ class TaskRemoteDataSource {
     }
   }
 
-  Future<Either<ServerException, TaskEntity>> deleteTask(
-    TaskEntity taskEntity,
-  ) async {
+  Future<Either<ServerException, TaskEntity>> deleteTask(int id) async {
     try {
       final response = await dio.delete(
-        EndPoint.deleteTask(taskEntity.id),
+        EndPoint.deleteTask(id),
 
-        queryParameters: {'id': taskEntity.id},
+        queryParameters: {'id': id},
       );
       return Right(TaskModel.fromJson(response.data));
     } on ServerException catch (e) {
@@ -37,19 +35,19 @@ class TaskRemoteDataSource {
       return Left(e);
     }
   }
-//   Future<Either<ServerException, TaskEntity>> updateTask(
-//     TaskEntity taskEntity) async {
-//   try {
-//     final response = await dio.put(
-//       '${EndPoint.updateTask}/${taskEntity.id}',
-//       data: taskEntity.toJson(), // يجب أن تكون موجودة في TaskModel
-//     );
-//     return Right(TaskModel.fromJson(response.data));
-//   } on ServerException catch (e) {
-//     log('UpdateTask Error: ${e.errorModel.errorMessage}');
-//     return Left(e);
-//   }
-// }
+  //   Future<Either<ServerException, TaskEntity>> updateTask(
+  //     TaskEntity taskEntity) async {
+  //   try {
+  //     final response = await dio.put(
+  //       '${EndPoint.updateTask}/${taskEntity.id}',
+  //       data: taskEntity.toJson(), // يجب أن تكون موجودة في TaskModel
+  //     );
+  //     return Right(TaskModel.fromJson(response.data));
+  //   } on ServerException catch (e) {
+  //     log('UpdateTask Error: ${e.errorModel.errorMessage}');
+  //     return Left(e);
+  //   }
+  // }
 
   Future<Either<ServerException, TaskEntity>> updateTaskStatus({
     required int id,
@@ -67,5 +65,3 @@ class TaskRemoteDataSource {
     }
   }
 }
-
-

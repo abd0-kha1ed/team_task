@@ -8,9 +8,9 @@ part 'delete_task_state.dart';
 class DeleteTaskCubit extends Cubit<DeleteTaskState> {
   final TaskRepo taskRepo;
   DeleteTaskCubit({required this.taskRepo}) : super(DeleteTaskInitial());
-  Future<void> deleteTask(TaskEntity taskEntity) async {
+  Future<void> deleteTask(int id) async {
     emit(DeleteTaskLoading());
-    var result = await taskRepo.deleteTask(taskEntity);
+    var result = await taskRepo.deleteTask(id);
     result.fold(
       (l) => emit(DeleteTaskError(l.errorModel.errorMessage)),
       (r) => emit(DeleteTaskSuccess(r)),
