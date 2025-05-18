@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_task/feature/home/presentation/manager/cubit/task_cubit.dart';
@@ -9,7 +10,6 @@ class HomeViewBodyBlocConsumer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TaskCubit, TaskState>(
-      
       builder: (context, state) {
         if (state is TaskLoading) {
           return const Center(child: CircularProgressIndicator());
@@ -17,10 +17,9 @@ class HomeViewBodyBlocConsumer extends StatelessWidget {
           return Center(child: Text(state.error));
         } else if (state is TaskSuccess) {
           return HomeViewBody(tasks: state.tasks);
-        }else{
+        } else {
           return const Center(child: Text('No tasks available'));
         }
-        
       },
     );
   }

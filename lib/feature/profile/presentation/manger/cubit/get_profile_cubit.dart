@@ -1,7 +1,8 @@
+// ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
+// ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
-import 'package:team_task/core/api/end_points.dart';
-import 'package:team_task/core/cache/cache_helper.dart';
+
 import 'package:team_task/feature/auth/domain/entites/register_entity.dart';
 import 'package:team_task/feature/auth/domain/repos/auth_repo.dart';
 

@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:team_task/feature/add_new_task/domain/enitites/add_new_task_entity.dart';
