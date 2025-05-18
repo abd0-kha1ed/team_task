@@ -37,39 +37,33 @@ class TaskRemoteDataSource {
       return Left(e);
     }
   }
-<<<<<<< HEAD
-//   Future<Either<ServerException, TaskEntity>> updateTask(
-//     TaskEntity taskEntity) async {
-//   try {
-//     final response = await dio.put(
-//       '${EndPoint.updateTask}/${taskEntity.id}',
-//       data: taskEntity.toJson(), // يجب أن تكون موجودة في TaskModel
-//     );
-//     return Right(TaskModel.fromJson(response.data));
-//   } on ServerException catch (e) {
-//     log('UpdateTask Error: ${e.errorModel.errorMessage}');
-//     return Left(e);
-//   }
-// }
+  //   Future<Either<ServerException, TaskEntity>> updateTask(
+  //     TaskEntity taskEntity) async {
+  //   try {
+  //     final response = await dio.put(
+  //       '${EndPoint.updateTask}/${taskEntity.id}',
+  //       data: taskEntity.toJson(), // يجب أن تكون موجودة في TaskModel
+  //     );
+  //     return Right(TaskModel.fromJson(response.data));
+  //   } on ServerException catch (e) {
+  //     log('UpdateTask Error: ${e.errorModel.errorMessage}');
+  //     return Left(e);
+  //   }
+  // }
 
   Future<Either<ServerException, TaskEntity>> updateTaskStatus({
-  required int id,
-  required bool isCompleted,
-}) async {
-  try {
-    final response = await dio.patch(
-      '${EndPoint.changeTaskStatus}/$id/status',
-      queryParameters: {
-        'isCompleted': isCompleted ? 1 : 0,
-      },
-    );
-    return Right(TaskModel.fromJson(response.data));
-  } on ServerException catch (e) {
-    log('UpdateTaskStatus Error: ${e.errorModel.errorMessage}');
-    return Left(e);
+    required int id,
+    required bool isCompleted,
+  }) async {
+    try {
+      final response = await dio.patch(
+        '${EndPoint.changeTaskStatus}/$id/status',
+        queryParameters: {'isCompleted': isCompleted ? 1 : 0},
+      );
+      return Right(TaskModel.fromJson(response.data));
+    } on ServerException catch (e) {
+      log('UpdateTaskStatus Error: ${e.errorModel.errorMessage}');
+      return Left(e);
+    }
   }
-}
-
-=======
->>>>>>> f05667b2006f23b5f48328643ad7ce2605d2ddf3
 }
