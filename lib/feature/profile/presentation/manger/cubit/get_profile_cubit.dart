@@ -1,7 +1,8 @@
+// ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
+// ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
-import 'package:team_task/core/api/end_points.dart';
-import 'package:team_task/core/cache/cache_helper.dart';
+
 import 'package:team_task/feature/auth/domain/entites/register_entity.dart';
 import 'package:team_task/feature/auth/domain/repos/auth_repo.dart';
 
@@ -20,23 +21,6 @@ class GetProfileCubit extends Cubit<GetProfileState> {
       },
       (user) {
         emit(GetProfileSuccess(profileModel: user));
-      },
-    );
-  }
-
-  Future<void> logout() async {
-    emit(LogoutLoading());
-    var result = await authRepo.logout();
-    await result.fold(
-      (error) async {
-        emit(LogoutError(error: error.toString()));
-      },
-      (message) async {
-        // حذف التوكن محليًا بعد نجاح logout من الـ API
-        await CacheHelper.removeData(
-          key: ApiKey.token,
-        ); // تأكدي إن المفتاح 'token' صحيح
-        emit(LogoutSuccess(message: message));
       },
     );
   }

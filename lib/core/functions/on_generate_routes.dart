@@ -4,7 +4,6 @@ import 'package:team_task/feature/auth/presentation/view/login_view.dart';
 import 'package:team_task/feature/auth/presentation/view/register_view.dart';
 import 'package:team_task/feature/home/presentation/view/home_view.dart';
 import 'package:team_task/feature/profile/presentation/view/profile_view.dart';
-
 import 'package:team_task/feature/splash/presentation/view/splash_view.dart';
 
 /// ***********  ✨ Windsurf Command ⭐  ************

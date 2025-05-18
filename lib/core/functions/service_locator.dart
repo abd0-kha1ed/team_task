@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,8 +36,6 @@ void setupServiceLocator(SharedPreferences sharedPreferences) async {
     TaskRemoteDataSource(dio: getIt.get<DioConsumer>()),
   );
   getIt.registerSingleton<TaskRepoImpl>(
-    TaskRepoImpl(
-      taskRemoteDataSource: getIt.get<TaskRemoteDataSource>(),
-    ),
+    TaskRepoImpl(taskRemoteDataSource: getIt.get<TaskRemoteDataSource>()),
   );
 }

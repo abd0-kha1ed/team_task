@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+// ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
 import 'package:team_task/feature/home/domain/entity/task_entity.dart';
 import 'package:team_task/feature/home/domain/repo/task_repo.dart';

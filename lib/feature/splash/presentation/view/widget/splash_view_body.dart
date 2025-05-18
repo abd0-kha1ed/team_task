@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:team_task/core/api/end_points.dart';
 import 'package:team_task/core/cache/cache_helper.dart';
@@ -50,7 +52,6 @@ class _SplashViewBodyState extends State<SplashViewBody>
       } else {
         Navigator.pushReplacementNamed(context, HomeView.routeName);
       }
-      // ignore: use_build_context_synchronously
     });
   }
 

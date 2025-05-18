@@ -18,17 +18,3 @@ class GetProfileError extends GetProfileState {
 
   GetProfileError({required this.error});
 }
-
-class LogoutLoading extends GetProfileState {}
-
-class LogoutSuccess extends GetProfileState {
-  final String message;
-
-  LogoutSuccess({required this.message});
-}
-
-class LogoutError extends GetProfileState {
-  final String error;
-
-  LogoutError({required this.error});
-}

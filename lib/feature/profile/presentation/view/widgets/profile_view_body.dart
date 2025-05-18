@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_task/core/widget/custom_button.dart';
-import 'package:team_task/feature/add_new_task/presentation/views/add_new_task_view.dart';
+
 import 'package:team_task/feature/auth/domain/entites/register_entity.dart';
 import 'package:team_task/feature/auth/presentation/view/login_view.dart';
-import 'package:team_task/feature/profile/presentation/manger/cubit/get_profile_cubit.dart';
+import 'package:team_task/feature/profile/presentation/manger/cubit/cubit/logut_cubit.dart';
+// <-- import LogoutCubit
 
 class ProfileViewBody extends StatelessWidget {
   const ProfileViewBody({super.key, required this.profileModel});
@@ -35,7 +36,9 @@ class ProfileViewBody extends StatelessWidget {
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           ),
           const Spacer(),
-          BlocConsumer<GetProfileCubit, GetProfileState>(
+
+          // Use BlocConsumer for LogoutCubit instead of GetProfileCubit
+          BlocConsumer<LogoutCubit, LogoutState>(
             listener: (context, state) {
               if (state is LogoutError) {
                 ScaffoldMessenger.of(
@@ -61,11 +64,14 @@ class ProfileViewBody extends StatelessWidget {
                 color: Colors.red,
                 text: 'Logout',
                 onPressed: () {
-                  context.read<GetProfileCubit>().logout();
+                  context
+                      .read<LogoutCubit>()
+                      .logut(); // <-- call logout on LogoutCubit
                 },
               );
             },
           ),
+
           const SizedBox(height: 64),
         ],
       ),
