@@ -13,13 +13,28 @@ class TaskRemoteDataSource {
   Future<Either<ServerException, List<TaskEntity>>> getTasks() async {
     try {
       final response = await dio.get(EndPoint.getTasks);
-      return Right((response.data as List)
-          .map((e) => TaskModel.fromJson(e))
-          .toList());
+      return Right(
+        (response.data as List).map((e) => TaskModel.fromJson(e)).toList(),
+      );
     } on ServerException catch (e) {
       log('ServerException: ${e.errorModel.errorMessage}');
       return Left(e);
     }
   }
-  
+
+  Future<Either<ServerException, TaskEntity>> deleteTask(
+    TaskEntity taskEntity,
+  ) async {
+    try {
+      final response = await dio.delete(
+        EndPoint.deleteTask(taskEntity.id),
+
+        queryParameters: {'id': taskEntity.id},
+      );
+      return Right(TaskModel.fromJson(response.data));
+    } on ServerException catch (e) {
+      log('ServerException: ${e.errorModel.errorMessage}');
+      return Left(e);
+    }
+  }
 }

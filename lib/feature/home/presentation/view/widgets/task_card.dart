@@ -3,13 +3,9 @@ import 'package:team_task/feature/home/domain/entity/task_entity.dart';
 
 class TaskCard extends StatelessWidget {
   final TaskEntity task;
-   final Function(bool?)? onChanged;
+  final Function(bool?)? onChanged;
 
-  const TaskCard({
-    super.key,
-    
-     this.onChanged, required this.task,
-  });
+  const TaskCard({super.key, this.onChanged, required this.task});
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +14,11 @@ class TaskCard extends StatelessWidget {
       child: ListTile(
         title: Text(task.title),
         subtitle: Text(task.subtitle),
-        leading: Checkbox(
-          value: task.isChecked,
-          onChanged: onChanged,
+        leading: Row(
+          children: [
+            const Icon(Icons.check_circle),
+            Checkbox(value: task.isChecked, onChanged: onChanged),
+          ],
         ),
       ),
     );
