@@ -26,4 +26,12 @@ class TaskRepoImpl implements TaskRepo {
   ) {
     throw UnimplementedError();
   }
+  @override
+Future<Either<ServerException, TaskEntity>> updateTaskStatus({
+  required int id,
+  required bool isCompleted,
+}) {
+  return taskRemoteDataSource.updateTaskStatus(id: id, isCompleted: isCompleted);
+}
+
 }

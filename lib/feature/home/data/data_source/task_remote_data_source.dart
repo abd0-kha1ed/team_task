@@ -21,5 +21,36 @@ class TaskRemoteDataSource {
       return Left(e);
     }
   }
-  
+//   Future<Either<ServerException, TaskEntity>> updateTask(
+//     TaskEntity taskEntity) async {
+//   try {
+//     final response = await dio.put(
+//       '${EndPoint.updateTask}/${taskEntity.id}',
+//       data: taskEntity.toJson(), // يجب أن تكون موجودة في TaskModel
+//     );
+//     return Right(TaskModel.fromJson(response.data));
+//   } on ServerException catch (e) {
+//     log('UpdateTask Error: ${e.errorModel.errorMessage}');
+//     return Left(e);
+//   }
+// }
+
+  Future<Either<ServerException, TaskEntity>> updateTaskStatus({
+  required int id,
+  required bool isCompleted,
+}) async {
+  try {
+    final response = await dio.patch(
+      '${EndPoint.changeTaskStatus}/$id/status',
+      queryParameters: {
+        'isCompleted': isCompleted ? 1 : 0,
+      },
+    );
+    return Right(TaskModel.fromJson(response.data));
+  } on ServerException catch (e) {
+    log('UpdateTaskStatus Error: ${e.errorModel.errorMessage}');
+    return Left(e);
+  }
+}
+
 }

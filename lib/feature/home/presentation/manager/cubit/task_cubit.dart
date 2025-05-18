@@ -42,4 +42,27 @@ class TaskCubit extends Cubit<TaskState> {
     _taskStreamController.close();
     return super.close();
   }
+  Future<void> updateTaskStatus({
+  required int id,
+  required bool isCompleted,
+}) async {
+  print("🔁 updateTaskStatus() called");
+
+  final result = await taskRepo.updateTaskStatus(
+    id: id,
+    isCompleted: isCompleted,
+  );
+
+  result.fold(
+    (error) {
+      print("❌ updateTaskStatus failed: $error");
+      emit(TaskError(error.toString()));
+    },
+    (_) async {
+      print("✅ updateTaskStatus success: reloading tasks...");
+      await getTasks(); 
+    },
+  );
+}
+
 }
