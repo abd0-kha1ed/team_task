@@ -9,18 +9,16 @@ class HomeViewBodyBlocConsumer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TaskCubit, TaskState>(
-      
       builder: (context, state) {
         if (state is TaskLoading) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is TaskError) {
-          return Center(child: Text(state.error));
+          return Center(child: Text('Error: ${state.error}'));
         } else if (state is TaskSuccess) {
           return HomeViewBody(tasks: state.tasks);
-        }else{
+        } else {
           return const Center(child: Text('No tasks available'));
         }
-        
       },
     );
   }

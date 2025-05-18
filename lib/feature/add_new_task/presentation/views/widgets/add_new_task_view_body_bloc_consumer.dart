@@ -21,10 +21,9 @@ class AddNewTaskViewBodyBlocConsumer extends StatelessWidget {
               content: Text('Task added successfully!'),
               backgroundColor: Colors.green,
             ),
-          
-          
           );
-          Navigator.pop(context);
+
+          Navigator.pop(context, true); // ✅ المفتاح هنا
         }
       },
       builder: (context, state) {

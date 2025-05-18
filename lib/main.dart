@@ -5,6 +5,8 @@ import 'package:team_task/core/cache/cache_helper.dart';
 import 'package:team_task/core/functions/custom_bloc_observer.dart';
 import 'package:team_task/core/functions/on_generate_routes.dart';
 import 'package:team_task/core/functions/service_locator.dart';
+import 'package:team_task/feature/home/data/repo/task_repo_impl.dart';
+import 'package:team_task/feature/home/presentation/manager/cubit/task_cubit.dart';
 import 'package:team_task/feature/splash/presentation/view/splash_view.dart';
 
 void main() async {
@@ -14,6 +16,9 @@ void main() async {
   setupServiceLocator(sharedPreferences);
   Bloc.observer = CustomBlocObserver();
 
+  // ✅ تسجيل Cubit في service locator
+  getIt.registerLazySingleton<TaskCubit>(() => TaskCubit(taskRepo: getIt<TaskRepoImpl>()));
+
   runApp(TaskyApp());
 }
 
@@ -21,9 +26,12 @@ class TaskyApp extends StatelessWidget {
   const TaskyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      onGenerateRoute: onGenerateRoutes,
-      initialRoute: SplashView.routeName,
+    return BlocProvider<TaskCubit>.value(
+      value: getIt<TaskCubit>(), // ✅ استخدام الـ instance الوحيد
+      child: MaterialApp(
+        onGenerateRoute: onGenerateRoutes,
+        initialRoute: SplashView.routeName,
+      ),
     );
   }
 }
