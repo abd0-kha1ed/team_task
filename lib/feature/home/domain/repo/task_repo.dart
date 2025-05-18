@@ -7,8 +7,7 @@ abstract class TaskRepo {
   Future<Either<ServerException, TaskEntity>> updateTask(TaskEntity taskEntity);
   Future<Either<ServerException, TaskEntity>> deleteTask(TaskEntity taskEntity);
   Future<Either<ServerException, TaskEntity>> updateTaskStatus({
-  required int id,
-  required bool isCompleted,
-});
-
+    required int id,
+    required bool isCompleted,
+  });
 }

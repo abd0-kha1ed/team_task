@@ -52,21 +52,20 @@ class TaskRemoteDataSource {
 // }
 
   Future<Either<ServerException, TaskEntity>> updateTaskStatus({
-  required int id,
-  required bool isCompleted,
-}) async {
-  try {
-    final response = await dio.patch(
-      '${EndPoint.changeTaskStatus}/$id/status',
-      queryParameters: {
-        'isCompleted': isCompleted ? 1 : 0,
-      },
-    );
-    return Right(TaskModel.fromJson(response.data));
-  } on ServerException catch (e) {
-    log('UpdateTaskStatus Error: ${e.errorModel.errorMessage}');
-    return Left(e);
+    required int id,
+    required bool isCompleted,
+  }) async {
+    try {
+      final response = await dio.patch(
+        '${EndPoint.changeTaskStatus}/$id/status',
+        queryParameters: {'isCompleted': isCompleted ? 1 : 0},
+      );
+      return Right(TaskModel.fromJson(response.data));
+    } on ServerException catch (e) {
+      log('UpdateTaskStatus Error: ${e.errorModel.errorMessage}');
+      return Left(e);
+    }
   }
 }
 
-}
+
