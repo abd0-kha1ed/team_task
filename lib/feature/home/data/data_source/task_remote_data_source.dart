@@ -37,7 +37,6 @@ class TaskRemoteDataSource {
       return Left(e);
     }
   }
-<<<<<<< HEAD
 //   Future<Either<ServerException, TaskEntity>> updateTask(
 //     TaskEntity taskEntity) async {
 //   try {
@@ -70,6 +69,4 @@ class TaskRemoteDataSource {
   }
 }
 
-=======
->>>>>>> f05667b2006f23b5f48328643ad7ce2605d2ddf3
 }
