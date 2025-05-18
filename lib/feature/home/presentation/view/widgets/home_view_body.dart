@@ -52,45 +52,47 @@ class _HomeViewBodyState extends State<HomeViewBody> {
             onTap: (index) => setState(() => selectedTabIndex = index),
           ),
           Expanded(
-            child: tasksToShow.isEmpty
-                ? const Center(child: Text('No tasks'))
-                : ListView.separated(
-                    key: ValueKey<int>(selectedTabIndex),
-                    itemCount: tasksToShow.length,
-                    separatorBuilder: (_, __) => const SizedBox(height: 8),
-                    itemBuilder: (context, index) {
-                      final task = tasksToShow[index];
-                      return ListTile(
-                        tileColor: Colors.grey[200],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        title: Text(
-                          task.title,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (task.subtitle.isNotEmpty) Text(task.subtitle),
-                            Text(
-                              "Date: ${task.date}",
-                              style: const TextStyle(fontSize: 12),
-                            ),
-                          ],
-                        ),
-                        trailing: IconButton(
-                          icon: Icon(
-                            task.isChecked
-                                ? Icons.check_circle
-                                : Icons.radio_button_unchecked,
-                            color: task.isChecked ? Colors.green : Colors.grey,
+            child:
+                tasksToShow.isEmpty
+                    ? const Center(child: Text('No tasks'))
+                    : ListView.separated(
+                      key: ValueKey<int>(selectedTabIndex),
+                      itemCount: tasksToShow.length,
+                      separatorBuilder: (_, __) => const SizedBox(height: 8),
+                      itemBuilder: (context, index) {
+                        final task = tasksToShow[index];
+                        return ListTile(
+                          tileColor: Colors.grey[200],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                          onPressed: () => toggleTaskCompletion(task),
-                        ),
-                      );
-                    },
-                  ),
+                          title: Text(
+                            task.title,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (task.subtitle.isNotEmpty) Text(task.subtitle),
+                              Text(
+                                "Date: ${task.date}",
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                            ],
+                          ),
+                          trailing: IconButton(
+                            icon: Icon(
+                              task.isChecked
+                                  ? Icons.check_circle
+                                  : Icons.radio_button_unchecked,
+                              color:
+                                  task.isChecked ? Colors.green : Colors.grey,
+                            ),
+                            onPressed: () => toggleTaskCompletion(task),
+                          ),
+                        );
+                      },
+                    ),
           ),
         ],
       ),

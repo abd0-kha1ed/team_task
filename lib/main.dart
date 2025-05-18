@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:team_task/core/api/end_points.dart';
 import 'package:team_task/core/cache/cache_helper.dart';
 import 'package:team_task/core/functions/custom_bloc_observer.dart';
 import 'package:team_task/core/functions/on_generate_routes.dart';
@@ -15,10 +18,13 @@ void main() async {
   await CacheHelper.init();
   setupServiceLocator(sharedPreferences);
   Bloc.observer = CustomBlocObserver();
-
+  getIt.registerLazySingleton<TaskCubit>(
+    () => TaskCubit(taskRepo: getIt<TaskRepoImpl>()),
+  );
   // ✅ تسجيل Cubit في service locator
-  getIt.registerLazySingleton<TaskCubit>(() => TaskCubit(taskRepo: getIt<TaskRepoImpl>()));
 
+  final token = CacheHelper.getData(key: ApiKey.token);
+  log('📌 Current Token: $token');
   runApp(TaskyApp());
 }
 
