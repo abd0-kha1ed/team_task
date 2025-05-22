@@ -6,7 +6,7 @@ import 'package:team_task/feature/add_new_task/presentation/views/add_new_task_v
 import 'package:team_task/feature/home/data/repo/task_repo_impl.dart';
 import 'package:team_task/feature/home/presentation/manager/cubit/delete_task_cubit.dart';
 import 'package:team_task/feature/home/presentation/manager/cubit/task_cubit.dart';
-import 'package:team_task/feature/home/presentation/view/widgets/home_view_body_bloc-consumer.dart';
+import 'package:team_task/feature/home/presentation/view/widgets/home_view_body_bloc_consumer.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
