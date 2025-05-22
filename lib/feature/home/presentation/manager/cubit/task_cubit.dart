@@ -40,6 +40,10 @@ class TaskCubit extends Cubit<TaskState> {
       },
       (taskEntity) {
         emit(TaskSuccess(taskEntity));
+        for (final task in taskEntity) {
+  print("🧪 Task: ${task.title} - isChecked: ${task.isChecked}");
+}
+
         _taskStreamController.add(taskEntity);
       },
     );

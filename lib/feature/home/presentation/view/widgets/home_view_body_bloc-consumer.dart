@@ -1,4 +1,3 @@
-// ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_task/feature/auth/presentation/view/login_view.dart';
@@ -13,14 +12,21 @@ class HomeViewBodyBlocConsumer extends StatelessWidget {
     return BlocBuilder<TaskCubit, TaskState>(
       builder: (context, state) {
         if (state is TaskUnauthicated) {
-          Navigator.pushReplacementNamed(context, LoginView.routeName);
+          // تأجيل التنقل حتى انتهاء البناء
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.pushReplacementNamed(context, LoginView.routeName);
+          });
+
+          // أثناء التنقل، أظهر شيء بسيط
+          return const Center(child: CircularProgressIndicator());
         }
+
         if (state is TaskLoading) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is TaskError) {
           return Center(child: Text('Error: ${state.error}'));
         } else if (state is TaskSuccess) {
-          return HomeViewBody(tasks: state.tasks);
+          return const HomeViewBody(); // لا حاجة لتمرير tasks الآن
         } else {
           return const Center(child: Text('No tasks available'));
         }
