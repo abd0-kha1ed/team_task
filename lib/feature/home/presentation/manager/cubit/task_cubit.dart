@@ -2,10 +2,9 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 // ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
-import 'package:dio/dio.dart'; // for DioException
+
 import 'package:team_task/core/api/end_points.dart';
 import 'package:team_task/core/cache/cache_helper.dart';
-import 'package:team_task/core/errors/server_exsption.dart';
 import 'package:team_task/feature/home/domain/entity/task_entity.dart';
 import 'package:team_task/feature/home/domain/repo/task_repo.dart';
 
@@ -22,12 +21,12 @@ class TaskCubit extends Cubit<TaskState> {
   }
 
   Future<void> getTasks() async {
-    print("🔁 getTasks() called");
+    // print("🔁 getTasks() called");
 
     // Check for stored token before API call
     final token = CacheHelper.getDataString(key: ApiKey.token);
     if (token == null) {
-      print("🚨 No token found, user needs to login");
+      // print("🚨 No token found, user needs to login");
       emit(TaskUnauthicated());
       return;
     }
@@ -51,27 +50,27 @@ class TaskCubit extends Cubit<TaskState> {
     _taskStreamController.close();
     return super.close();
   }
+
   Future<void> updateTaskStatus({
-  required int id,
-  required bool isCompleted,
-}) async {
-  print("🔁 updateTaskStatus() called");
+    required int id,
+    required bool isCompleted,
+  }) async {
+    // print("🔁 updateTaskStatus() called");
 
-  final result = await taskRepo.updateTaskStatus(
-    id: id,
-    isCompleted: isCompleted,
-  );
+    final result = await taskRepo.updateTaskStatus(
+      id: id,
+      isCompleted: isCompleted,
+    );
 
-  result.fold(
-    (error) {
-      print("❌ updateTaskStatus failed: $error");
-      emit(TaskError(error.toString()));
-    },
-    (_) async {
-      print("✅ updateTaskStatus success: reloading tasks...");
-      await getTasks(); 
-    },
-  );
-}
-
+    result.fold(
+      (error) {
+        // print("❌ updateTaskStatus failed: $error");
+        emit(TaskError(error.toString()));
+      },
+      (_) async {
+        // print("✅ updateTaskStatus success: reloading tasks...");
+        await getTasks();
+      },
+    );
+  }
 }
