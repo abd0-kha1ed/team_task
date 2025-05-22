@@ -2,10 +2,9 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 // ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
-import 'package:dio/dio.dart'; // for DioException
+// for DioException
 import 'package:team_task/core/api/end_points.dart';
 import 'package:team_task/core/cache/cache_helper.dart';
-import 'package:team_task/core/errors/server_exsption.dart';
 import 'package:team_task/feature/home/domain/entity/task_entity.dart';
 import 'package:team_task/feature/home/domain/repo/task_repo.dart';
 
