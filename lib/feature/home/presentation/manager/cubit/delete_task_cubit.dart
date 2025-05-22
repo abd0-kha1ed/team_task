@@ -9,11 +9,18 @@ class DeleteTaskCubit extends Cubit<DeleteTaskState> {
   final TaskRepo taskRepo;
   DeleteTaskCubit({required this.taskRepo}) : super(DeleteTaskInitial());
   Future<void> deleteTask(int id) async {
-    emit(DeleteTaskLoading());
-    var result = await taskRepo.deleteTask(id);
-    result.fold(
-      (l) => emit(DeleteTaskError(l.errorModel.errorMessage)),
-      (r) => emit(DeleteTaskSuccess(r)),
-    );
-  }
+  emit(DeleteTaskLoading());
+
+  var result = await taskRepo.deleteTask(id);
+
+  result.fold(
+    (l) => emit(DeleteTaskError(l.errorModel.errorMessage)),
+    (r) async {
+      emit(DeleteTaskSuccess(r));
+      await Future.delayed(const Duration(milliseconds: 300));
+      emit(DeleteTaskInitial());
+    },
+  );
+}
+
 }

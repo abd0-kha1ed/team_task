@@ -34,9 +34,10 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                   final allTasks = state.tasks;
 
                   // Apply filter
-                  final tasksToShow = selectedTabIndex == 1
-                      ? allTasks.where((task) => !task.isChecked).toList()
-                      : selectedTabIndex == 2
+                  final tasksToShow =
+                      selectedTabIndex == 1
+                          ? allTasks.where((task) => !task.isChecked).toList()
+                          : selectedTabIndex == 2
                           ? allTasks.where((task) => task.isChecked).toList()
                           : allTasks;
 
@@ -70,50 +71,56 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                           ],
                         ),
                         trailing: SizedBox(
-                          width: 150,
-                          child: Row(
-                            children: [
-                              BlocConsumer<DeleteTaskCubit, DeleteTaskState>(
-                                listener: (context, state) {
-                                  if (state is DeleteTaskError) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(state.error),
-                                        backgroundColor: Colors.red,
-                                      ),
-                                    );
-                                  }
-                                },
-                                builder: (context, state) {
-                                  return IconButton(
-                                    icon: const Icon(Icons.delete),
-                                    onPressed: () {
-                                      context
-                                          .read<DeleteTaskCubit>()
-                                          .deleteTask(task.id);
-                                    },
-                                  );
-                                },
-                              ),
-                              IconButton(
-                                icon: Icon(
-                                  task.isChecked
-                                      ? Icons.check_circle
-                                      : Icons.radio_button_unchecked,
-                                  color: task.isChecked
-                                      ? Colors.green
-                                      : Colors.grey,
-                                ),
-                                onPressed: () {
-                                  context.read<TaskCubit>().updateTaskStatus(
-                                        id: task.id,
-                                        isCompleted: !task.isChecked,
-                                      );
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
+  width: 150,
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.end,
+    children: [
+      BlocConsumer<DeleteTaskCubit, DeleteTaskState>(
+        listener: (context, state) {
+          if (state is DeleteTaskError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.error),
+                backgroundColor: Colors.red,
+              ),
+            );
+          } else if (state is DeleteTaskSuccess) {
+            // ✅ إعادة تحميل المهام بعد الحذف
+            context.read<TaskCubit>().getTasks();
+
+            // ScaffoldMessenger.of(context).showSnackBar(
+            //   const SnackBar(
+            //     content: Text('Task deleted successfully'),
+            //     backgroundColor: Colors.green,
+            //   ),
+            // );
+          }
+        },
+        builder: (context, state) {
+          return IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: () {
+              context.read<DeleteTaskCubit>().deleteTask(task.id);
+            },
+          );
+        },
+      ),
+      IconButton(
+        icon: Icon(
+          task.isChecked ? Icons.check_circle : Icons.radio_button_unchecked,
+          color: task.isChecked ? Colors.green : Colors.grey,
+        ),
+        onPressed: () {
+          context.read<TaskCubit>().updateTaskStatus(
+            id: task.id,
+            isCompleted: !task.isChecked,
+          );
+        },
+      ),
+    ],
+  ),
+),
+
                       );
                     },
                   );
