@@ -9,11 +9,9 @@ class TaskRepoImpl implements TaskRepo {
 
   TaskRepoImpl({required this.taskRemoteDataSource});
   @override
-  Future<Either<ServerException, TaskEntity>> deleteTask(
-    TaskEntity taskEntity,
-  ) async {
+  Future<Either<ServerException, TaskEntity>> deleteTask(int id) async {
     try {
-      var result = await taskRemoteDataSource.deleteTask(taskEntity);
+      var result = await taskRemoteDataSource.deleteTask(id);
       return result;
     } on ServerException catch (e) {
       return Left(e);
@@ -31,12 +29,15 @@ class TaskRepoImpl implements TaskRepo {
   ) {
     throw UnimplementedError();
   }
-  @override
-Future<Either<ServerException, TaskEntity>> updateTaskStatus({
-  required int id,
-  required bool isCompleted,
-}) {
-  return taskRemoteDataSource.updateTaskStatus(id: id, isCompleted: isCompleted);
-}
 
+  @override
+  Future<Either<ServerException, TaskEntity>> updateTaskStatus({
+    required int id,
+    required bool isCompleted,
+  }) {
+    return taskRemoteDataSource.updateTaskStatus(
+      id: id,
+      isCompleted: isCompleted,
+    );
+  }
 }

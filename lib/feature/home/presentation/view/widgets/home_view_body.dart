@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_task/feature/home/domain/entity/task_entity.dart';
+import 'package:team_task/feature/home/presentation/manager/cubit/delete_task_cubit.dart';
 import 'package:team_task/feature/home/presentation/manager/cubit/task_cubit.dart';
 import 'package:team_task/feature/home/presentation/view/widgets/task_app_bar.dart';
 
@@ -64,20 +65,55 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                               ),
                             ],
                           ),
-                          trailing: IconButton(
-                            icon: Icon(
-                              task.isChecked
-                                  ? Icons.check_circle
-                                  : Icons.radio_button_unchecked,
-                              color:
-                                  task.isChecked ? Colors.green : Colors.grey,
+                          trailing: SizedBox(
+                            width: 150,
+                            child: Row(
+                              children: [
+                                BlocConsumer<DeleteTaskCubit, DeleteTaskState>(
+                                  listener: (context, state) {
+                                    if (state is DeleteTaskError) {
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        SnackBar(
+                                          content: Text(state.error),
+                                          backgroundColor: Colors.red,
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  builder: (context, state) {
+                                    return IconButton(
+                                      icon: const Icon(Icons.delete),
+
+                                      onPressed: () {
+                                        context
+                                            .read<DeleteTaskCubit>()
+                                            .deleteTask(task.id);
+                                      },
+                                    );
+                                  },
+                                ),
+
+                                IconButton(
+                                  icon: Icon(
+                                    task.isChecked
+                                        ? Icons.check_circle
+                                        : Icons.radio_button_unchecked,
+                                    color:
+                                        task.isChecked
+                                            ? Colors.green
+                                            : Colors.grey,
+                                  ),
+                                  onPressed: () {
+                                    context.read<TaskCubit>().updateTaskStatus(
+                                      id: task.id,
+                                      isCompleted: !task.isChecked,
+                                    );
+                                  },
+                                ),
+                              ],
                             ),
-                            onPressed: () {
-                              context.read<TaskCubit>().updateTaskStatus(
-                                id: task.id,
-                                isCompleted: !task.isChecked,
-                              );
-                            },
                           ),
                         );
                       },

@@ -5,7 +5,7 @@ import 'package:team_task/feature/home/domain/entity/task_entity.dart';
 abstract class TaskRepo {
   Future<Either<ServerException, List<TaskEntity>>> getTasks();
   Future<Either<ServerException, TaskEntity>> updateTask(TaskEntity taskEntity);
-  Future<Either<ServerException, TaskEntity>> deleteTask(TaskEntity taskEntity);
+  Future<Either<ServerException, TaskEntity>> deleteTask(int id);
   Future<Either<ServerException, TaskEntity>> updateTaskStatus({
     required int id,
     required bool isCompleted,
