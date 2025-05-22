@@ -31,7 +31,7 @@ class ApiKey {
   static String title = "title";
   static String description = "description";
   static String dueDate = "dueDate";
-  static String isCompleted = "isCompleted";
+  static String isCompleted = "is_completed";
   static String userId = "user_id";
 
   // Misc

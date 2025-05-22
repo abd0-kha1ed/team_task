@@ -12,41 +12,21 @@ class CustomBottomNavBar extends StatelessWidget {
 
     switch (index) {
       case 0:
-        Navigator.of(
-          context,
-        ).pushNamedAndRemoveUntil('/home', (route) => false);
+        Navigator.of(context).pushReplacementNamed('/home');
         break;
       case 1:
-        Navigator.of(
-          context,
-        ).pushNamedAndRemoveUntil('/calendar', (route) => false);
-        break;
-      case 2:
         Navigator.pushNamed(context, AddNewTaskView.routeName);
         break;
-      case 3:
-        Navigator.of(
-          context,
-        ).pushNamedAndRemoveUntil('/search', (route) => false);
-        break;
-      case 4:
-        Navigator.of(
-          context,
-        ).pushNamedAndRemoveUntil(ProfileView.routeName, (route) => false);
+      case 2:
+        Navigator.of(context).pushReplacementNamed(ProfileView.routeName);
         break;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final labels = ['Home', 'Calendar', '', 'Search', 'Profile'];
-    final icons = [
-      Icons.home,
-      Icons.calendar_today,
-      Icons.add,
-      Icons.search,
-      Icons.person,
-    ];
+    final labels = ['Home', '', 'Profile'];
+    final icons = [Icons.home, Icons.add, Icons.person];
 
     return BottomAppBar(
       shape: const CircularNotchedRectangle(),
@@ -55,8 +35,8 @@ class CustomBottomNavBar extends StatelessWidget {
         height: 80,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: List.generate(5, (index) {
-            if (index == 2) return const SizedBox(width: 48); // FAB gap
+          children: List.generate(3, (index) {
+            if (index == 1) return const SizedBox(width: 48); // FAB gap
             return GestureDetector(
               onTap: () => _navigateTo(index, context),
               child: Column(

@@ -55,7 +55,7 @@ class TaskRemoteDataSource {
   }) async {
     try {
       final response = await dio.patch(
-        '${EndPoint.changeTaskStatus}/$id/status',
+        EndPoint.changeTaskStatus(id),
         queryParameters: {'isCompleted': isCompleted ? 1 : 0},
       );
       return Right(TaskModel.fromJson(response.data));

@@ -9,15 +9,16 @@ class TaskModel extends TaskEntity {
     required super.date,
     required super.isChecked,
   });
+
   factory TaskModel.fromJson(Map<String, dynamic> json) {
-    return TaskModel(
-      id: json[ApiKey.id] ?? 0,
-      title: json[ApiKey.title] ?? '',
-      subtitle: json[ApiKey.description] ?? '',
-      date:
-          json[ApiKey.dueDate] ??
-          "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}",
-      isChecked: json[ApiKey.isCompleted] == 1,
-    );
-  }
+  return TaskModel(
+    id: json[ApiKey.id] ?? 0,
+    title: json[ApiKey.title] ?? '',
+    subtitle: json[ApiKey.description] ?? '',
+    date: json[ApiKey.dueDate] ??
+        "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}",
+    isChecked: json[ApiKey.isCompleted].toString() == "1",
+  );
+}
+
 }

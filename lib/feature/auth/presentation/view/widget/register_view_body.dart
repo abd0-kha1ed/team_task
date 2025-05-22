@@ -6,7 +6,6 @@ import 'package:team_task/core/widget/custom_button.dart';
 import 'package:team_task/feature/auth/presentation/manager/register_cubit/register_cubit.dart';
 import 'package:team_task/feature/auth/presentation/view/widget/custom_text_field.dart';
 import 'package:team_task/feature/auth/presentation/view/widget/password_conditions_widget.dart';
-import 'package:team_task/feature/auth/presentation/view/widget/validation_widget.dart';
 
 class RegisterViewBody extends StatefulWidget {
   const RegisterViewBody({super.key});
@@ -196,17 +195,9 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                 isValid: hasUpperAndLower(passwordController.text),
               ),
               const SizedBox(height: 48),
-              const SizedBox(height: 48),
 
               // Terms and Conditions
-              ValidationWidget(
-                text:
-                    'By agreeing to the terms and conditions, you are entering into a legally binding contract with the service provider.',
-                isChecked: false,
-                onChanged: (value) {
-                  // Handle terms checkbox
-                },
-              ),
+              
               const SizedBox(height: 16),
 
               // Submit Button

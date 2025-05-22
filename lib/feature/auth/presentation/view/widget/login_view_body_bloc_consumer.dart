@@ -29,7 +29,7 @@ class LoginViewBodyblocConsumer extends StatelessWidget {
             ),
           );
           context.read<TaskCubit>().getTasks();
-          Navigator.pushReplacementNamed(context, HomeView.routeName);
+          Navigator.pushNamedAndRemoveUntil(context, HomeView.routeName, (route) => false);
         }
       },
       builder: (context, state) {

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 // ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
-
+// for DioException
 import 'package:team_task/core/api/end_points.dart';
 import 'package:team_task/core/cache/cache_helper.dart';
 import 'package:team_task/feature/home/domain/entity/task_entity.dart';
@@ -40,6 +40,10 @@ class TaskCubit extends Cubit<TaskState> {
       },
       (taskEntity) {
         emit(TaskSuccess(taskEntity));
+        for (final task in taskEntity) {
+          print("🧪 Task: ${task.title} - isChecked: ${task.isChecked}");
+        }
+
         _taskStreamController.add(taskEntity);
       },
     );

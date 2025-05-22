@@ -33,7 +33,7 @@ class _SplashViewBodyState extends State<SplashViewBody>
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset(Assets.imagesSplashLogo),
+        Center(child: Image.asset(Assets.imagesSplashLogo)),
         SlidingText(slidingAnimation: slidingAnimation),
         const SizedBox(height: 16),
         const CircularProgressIndicator(

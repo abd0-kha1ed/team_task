@@ -2,5 +2,6 @@
     "cSpell.words": [
         "Tasky"
     ],
-    "cmake.sourceDirectory": "H:/5damty/team_task/team_task/linux"
+    "cmake.sourceDirectory": "H:/5damty/team_task/team_task/linux",
+    "java.configuration.updateBuildConfiguration": "interactive"
 }
