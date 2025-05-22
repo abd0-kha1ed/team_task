@@ -6,7 +6,6 @@ import 'package:team_task/core/widget/custom_button.dart';
 import 'package:team_task/feature/auth/presentation/manager/login_cubit/login_cubit.dart';
 import 'package:team_task/feature/auth/presentation/view/register_view.dart';
 import 'package:team_task/feature/auth/presentation/view/widget/custom_text_field.dart';
-import 'package:team_task/feature/auth/presentation/view/widget/validation_widget.dart';
 
 class LoginViewBody extends StatefulWidget {
   const LoginViewBody({super.key});
@@ -98,14 +97,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                   return null;
                 },
               ),
-              const SizedBox(height: 20),
-              ValidationWidget(
-                text: 'Remember Me',
-                isChecked: false,
-                onChanged: (value) {
-                  // Handle remember me checkbox change
-                },
-              ),
+              
               const SizedBox(height: 48),
 
               CustomButton(
